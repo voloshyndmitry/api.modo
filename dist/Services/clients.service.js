@@ -12,35 +12,35 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AuthService = void 0;
+exports.ClientsService = void 0;
 const mongoose_1 = require("mongoose");
 const common_1 = require("@nestjs/common");
 const mongoose_2 = require("@nestjs/mongoose");
-const auth_schema_1 = require("../Schemas/auth.schema");
-let AuthService = exports.AuthService = class AuthService {
-    constructor(authModel) {
-        this.authModel = authModel;
+const clients_schema_1 = require("../Schemas/clients.schema");
+let ClientsService = exports.ClientsService = class ClientsService {
+    constructor(usersModel) {
+        this.usersModel = usersModel;
     }
     async create(createCatDto) {
-        const createdCat = new this.authModel(createCatDto);
+        const createdCat = new this.usersModel(createCatDto);
         return createdCat.save();
     }
     async findAll() {
-        return this.authModel.find().exec();
+        return this.usersModel.find().exec();
     }
     async findOne(id) {
-        return this.authModel.findOne({ _id: id }).exec();
+        return this.usersModel.findOne({ _id: id }).exec();
     }
     async delete(id) {
-        const deletedCat = await this.authModel
+        const deletedCat = await this.usersModel
             .findByIdAndRemove({ _id: id })
             .exec();
         return deletedCat;
     }
 };
-exports.AuthService = AuthService = __decorate([
+exports.ClientsService = ClientsService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, mongoose_2.InjectModel)(auth_schema_1.AuthDataClass.name)),
+    __param(0, (0, mongoose_2.InjectModel)(clients_schema_1.ClientsDataClass.name)),
     __metadata("design:paramtypes", [mongoose_1.Model])
-], AuthService);
-//# sourceMappingURL=auth.service.js.map
+], ClientsService);
+//# sourceMappingURL=clients.service.js.map

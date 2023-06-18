@@ -13,6 +13,7 @@ const app_service_1 = require("./Services/app.service");
 const mongoose_1 = require("@nestjs/mongoose");
 const auth_module_1 = require("./Modules/auth.module");
 const users_module_1 = require("./Modules/users.module");
+const clients_module_1 = require("./Modules/clients.module");
 let AppModule = exports.AppModule = class AppModule {
 };
 exports.AppModule = AppModule = __decorate([
@@ -21,6 +22,7 @@ exports.AppModule = AppModule = __decorate([
             mongoose_1.MongooseModule.forRoot("mongodb+srv://modo-db-user:xiFT3EugrW8XihZE@modo.gqztrmr.mongodb.net/modo_main_db"),
             auth_module_1.AuthModule,
             users_module_1.UsersModule,
+            clients_module_1.ClientsModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

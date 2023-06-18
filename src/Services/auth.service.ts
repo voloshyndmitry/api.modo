@@ -16,7 +16,6 @@ export class AuthService {
   }
 
   async findAll(): Promise<AuthDataClass[]> {
-    console.log(await this.authModel.find());
     return this.authModel.find().exec();
   }
 

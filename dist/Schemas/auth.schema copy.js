@@ -16,10 +16,6 @@ let AuthDataClass = exports.AuthDataClass = class AuthDataClass {
 __decorate([
     (0, mongoose_1.Prop)({ required: true }),
     __metadata("design:type", String)
-], AuthDataClass.prototype, "id", void 0);
-__decorate([
-    (0, mongoose_1.Prop)({ required: true }),
-    __metadata("design:type", String)
 ], AuthDataClass.prototype, "login", void 0);
 __decorate([
     (0, mongoose_1.Prop)({ required: true }),
@@ -29,4 +25,4 @@ exports.AuthDataClass = AuthDataClass = __decorate([
     (0, mongoose_1.Schema)({ collection: "auth_data" })
 ], AuthDataClass);
 exports.AuthSchema = mongoose_1.SchemaFactory.createForClass(AuthDataClass);
-//# sourceMappingURL=auth.schema.js.map
+//# sourceMappingURL=auth.schema%20copy.js.map

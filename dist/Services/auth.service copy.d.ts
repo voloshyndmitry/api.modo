@@ -22,15 +22,16 @@
 /// <reference types="mongoose/types/validation" />
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
-import { HydratedDocument } from "mongoose";
-export type AuthDocument = HydratedDocument<AuthDataClass>;
-export declare class AuthDataClass {
-    id: string;
-    login: string;
-    pass: string;
+import { Model } from "mongoose";
+import { AuthDataClass } from "../Schemas/auth.schema";
+import { CreateAuthDto } from "../DTO/create-auth.dto";
+export declare class AuthService {
+    private authModel;
+    constructor(authModel: Model<AuthDataClass>);
+    create(createCatDto: CreateAuthDto): Promise<AuthDataClass>;
+    findAll(): Promise<AuthDataClass[]>;
+    findOne(id: string): Promise<AuthDataClass>;
+    delete(id: string): Promise<import("mongoose").Document<unknown, {}, AuthDataClass> & Omit<AuthDataClass & {
+        _id: import("mongoose").Types.ObjectId;
+    }, never>>;
 }
-export declare const AuthSchema: import("mongoose").Schema<AuthDataClass, import("mongoose").Model<AuthDataClass, any, any, any, import("mongoose").Document<unknown, any, AuthDataClass> & Omit<AuthDataClass & {
-    _id: import("mongoose").Types.ObjectId;
-}, never>, any>, {}, {}, {}, {}, import("mongoose").DefaultSchemaOptions, AuthDataClass, import("mongoose").Document<unknown, {}, import("mongoose").FlatRecord<AuthDataClass>> & Omit<import("mongoose").FlatRecord<AuthDataClass> & {
-    _id: import("mongoose").Types.ObjectId;
-}, never>>;

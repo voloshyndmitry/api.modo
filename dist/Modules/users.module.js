@@ -6,24 +6,23 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppModule = void 0;
+exports.UsersModule = void 0;
 const common_1 = require("@nestjs/common");
-const app_controller_1 = require("./Controllers/app.controller");
-const app_service_1 = require("./Services/app.service");
 const mongoose_1 = require("@nestjs/mongoose");
-const auth_module_1 = require("./Modules/auth.module");
-const users_module_1 = require("./Modules/users.module");
-let AppModule = exports.AppModule = class AppModule {
+const users_controller_1 = require("../Controllers/users.controller");
+const users_schema_1 = require("../Schemas/users.schema");
+const users_service_1 = require("../Services/users.service");
+let UsersModule = exports.UsersModule = class UsersModule {
 };
-exports.AppModule = AppModule = __decorate([
+exports.UsersModule = UsersModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            mongoose_1.MongooseModule.forRoot("mongodb+srv://modo-db-user:xiFT3EugrW8XihZE@modo.gqztrmr.mongodb.net/modo_main_db"),
-            auth_module_1.AuthModule,
-            users_module_1.UsersModule,
+            mongoose_1.MongooseModule.forFeature([
+                { name: users_schema_1.UsersDataClass.name, schema: users_schema_1.UserSchema },
+            ]),
         ],
-        controllers: [app_controller_1.AppController],
-        providers: [app_service_1.AppService],
+        controllers: [users_controller_1.UsersController],
+        providers: [users_service_1.UsersService],
     })
-], AppModule);
-//# sourceMappingURL=app.module.js.map
+], UsersModule);
+//# sourceMappingURL=users.module.js.map

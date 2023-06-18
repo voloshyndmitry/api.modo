@@ -23,14 +23,27 @@
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
 import { HydratedDocument } from "mongoose";
-export type AuthDocument = HydratedDocument<AuthDataClass>;
-export declare class AuthDataClass {
+export type ClientsDocument = HydratedDocument<ClientsDataClass>;
+export declare class ClientsDataClass {
     id: string;
-    login: string;
+    email: string;
     pass: string;
+    image: string;
+    name: string;
+    surname: string;
+    age: string;
+    level: string;
+    color: string;
+    phone: string;
+    address: string;
+    tags: string[];
+    parents: {
+        type: string;
+        fullName: string;
+    }[];
 }
-export declare const AuthSchema: import("mongoose").Schema<AuthDataClass, import("mongoose").Model<AuthDataClass, any, any, any, import("mongoose").Document<unknown, any, AuthDataClass> & Omit<AuthDataClass & {
+export declare const ClientSchema: import("mongoose").Schema<ClientsDataClass, import("mongoose").Model<ClientsDataClass, any, any, any, import("mongoose").Document<unknown, any, ClientsDataClass> & Omit<ClientsDataClass & {
     _id: import("mongoose").Types.ObjectId;
-}, never>, any>, {}, {}, {}, {}, import("mongoose").DefaultSchemaOptions, AuthDataClass, import("mongoose").Document<unknown, {}, import("mongoose").FlatRecord<AuthDataClass>> & Omit<import("mongoose").FlatRecord<AuthDataClass> & {
+}, never>, any>, {}, {}, {}, {}, import("mongoose").DefaultSchemaOptions, ClientsDataClass, import("mongoose").Document<unknown, {}, import("mongoose").FlatRecord<ClientsDataClass>> & Omit<import("mongoose").FlatRecord<ClientsDataClass> & {
     _id: import("mongoose").Types.ObjectId;
 }, never>>;

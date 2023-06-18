@@ -9,5 +9,6 @@ async function bootstrap() {
   });
   await app.listen(PORT);
 }
+bootstrap();
 export default bootstrap;
 //# sourceMappingURL=main.js.map

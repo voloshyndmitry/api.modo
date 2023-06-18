@@ -6,22 +6,23 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppModule = void 0;
+exports.AuthModule = void 0;
 const common_1 = require("@nestjs/common");
-const app_controller_1 = require("./Controllers/app.controller");
-const app_service_1 = require("./Services/app.service");
 const mongoose_1 = require("@nestjs/mongoose");
-const auth_module_1 = require("./Modules/auth.module");
-let AppModule = exports.AppModule = class AppModule {
+const auth_controller_1 = require("../Controllers/auth.controller");
+const auth_schema_1 = require("../Schemas/auth.schema");
+const auth_service_1 = require("../Services/auth.service");
+let AuthModule = exports.AuthModule = class AuthModule {
 };
-exports.AppModule = AppModule = __decorate([
+exports.AuthModule = AuthModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            mongoose_1.MongooseModule.forRoot("mongodb+srv://modo-db-user:xiFT3EugrW8XihZE@modo.gqztrmr.mongodb.net"),
-            auth_module_1.AuthModule,
+            mongoose_1.MongooseModule.forFeature([
+                { name: auth_schema_1.AuthDataClass.name, schema: auth_schema_1.AuthSchema },
+            ]),
         ],
-        controllers: [app_controller_1.AppController],
-        providers: [app_service_1.AppService],
+        controllers: [auth_controller_1.AuthController],
+        providers: [auth_service_1.AuthService],
     })
-], AppModule);
-//# sourceMappingURL=app.module.js.map
+], AuthModule);
+//# sourceMappingURL=auth.module.js.map

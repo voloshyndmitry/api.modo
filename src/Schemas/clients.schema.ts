@@ -24,6 +24,9 @@ export class ClientsDataClass {
   surname: string;
 
   @Prop({ required: true })
+  middlename: string;
+
+  @Prop({ required: true })
   age: string;
 
   @Prop({ required: true })
@@ -43,8 +46,13 @@ export class ClientsDataClass {
 
   @Prop({ required: true })
   parents: {
-    type: string;
     fullName: string;
+    relative: string;
+    name: string;
+    middlename: string;
+    surname: string;
+    email: string;
+    phone: string;
   }[];
 }
 

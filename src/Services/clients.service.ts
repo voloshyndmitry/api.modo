@@ -1,8 +1,8 @@
 import { Model } from "mongoose";
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
-import { CreateClientDto } from "src/DTO/create-client.dto";
-import { ClientsDataClass } from "src/Schemas/clients.schema";
+import { CreateClientDto } from "../DTO/create-client.dto";
+import { ClientsDataClass } from "../Schemas/clients.schema";
 
 @Injectable()
 export class ClientsService {

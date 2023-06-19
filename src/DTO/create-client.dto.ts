@@ -4,6 +4,7 @@ export class CreateClientDto {
   readonly pass: string;
   readonly image: string;
   readonly name: string;
+  readonly middlename: string;
   readonly surname: string;
   readonly age: string;
   readonly level: string;
@@ -12,7 +13,12 @@ export class CreateClientDto {
   readonly address: string;
   readonly tags: string[];
   readonly parents: {
-    type: string;
     fullName: string;
+    relative: string;
+    name: string;
+    middlename: string;
+    surname: string;
+    email: string;
+    phone: string;
   }[];
 }

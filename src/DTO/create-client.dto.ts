@@ -7,6 +7,7 @@ export class CreateClientDto {
   readonly middlename: string;
   readonly surname: string;
   readonly dob: string;
+  readonly gender: string;
   readonly level: string;
   readonly color: string;
   readonly phone: string;

@@ -30,6 +30,9 @@ export class ClientsDataClass {
   dob: string;
 
   @Prop({ required: true })
+  gender: string;
+
+  @Prop({ required: true })
   level: string;
 
   @Prop({ required: true })

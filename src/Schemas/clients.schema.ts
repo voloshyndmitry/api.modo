@@ -5,49 +5,49 @@ export type ClientsDocument = HydratedDocument<ClientsDataClass>;
 
 @Schema({ collection: "clients" })
 export class ClientsDataClass {
-  @Prop({ required: true })
+  @Prop()
   id: string;
 
-  @Prop({ required: true })
+  @Prop()
   email: string;
 
-  @Prop({ required: true })
+  @Prop()
   pass: string;
 
-  @Prop({ required: true })
+  @Prop()
   photo: string;
 
-  @Prop({ required: true })
+  @Prop()
   name: string;
 
-  @Prop({ required: true })
+  @Prop()
   surname: string;
 
-  @Prop({ required: true })
+  @Prop()
   middlename: string;
 
-  @Prop({ required: true })
+  @Prop()
   dob: string;
 
-  @Prop({ required: true })
+  @Prop()
   gender: string;
 
-  @Prop({ required: true })
+  @Prop()
   level: string;
 
-  @Prop({ required: true })
+  @Prop()
   color: string;
 
-  @Prop({ required: true })
+  @Prop()
   phone: string;
 
-  @Prop({ required: true })
+  @Prop()
   address: string;
 
-  @Prop({ required: true })
+  @Prop()
   tags: string[];
 
-  @Prop({ required: true })
+  @Prop()
   parents: {
     fullName: string;
     relative: string;

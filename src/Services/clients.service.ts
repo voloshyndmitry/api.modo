@@ -13,6 +13,7 @@ export class ClientsService {
 
   async create(createCatDto: CreateClientDto): Promise<ClientsDataClass> {
     const createdCat = new this.usersModel(createCatDto);
+    console.log({ createdCat });
     return createdCat.save();
   }
 

@@ -12,7 +12,7 @@ import { UsersDataClass } from "../Schemas/users.schema";
 import { UsersService } from "../Services/users.service";
 import { AuthGuard } from "../Services/auth.guard";
 
-@Controller("users")
+@Controller("user")
 export class UsersController {
   constructor(private readonly UsersService: UsersService) {}
 

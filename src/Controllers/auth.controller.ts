@@ -6,6 +6,7 @@ import {
   HttpStatus,
   Param,
   Post,
+  Query,
 } from "@nestjs/common";
 import { AuthService } from "../Services/auth.service";
 
@@ -19,9 +20,8 @@ export class AuthController {
     return this.authService.signIn(signInDto.email, signInDto.password);
   }
 
-  @HttpCode(HttpStatus.OK)
   @Get("login")
-  signIn2(@Param("login") email: string, @Param("pass") password: string) {
+  signIn2(@Query("login") email: string, @Query("pass") password: string) {
     return this.authService.signIn(email, password);
   }
 }

@@ -16,12 +16,11 @@ export class UsersService {
   }
 
   async findAll(): Promise<UsersDataClass[]> {
-    console.log(await this.usersModel.find());
     return this.usersModel.find().exec();
   }
 
-  async findOne(email: string): Promise<UsersDataClass> {
-    return this.usersModel.findOne((user) => user.email === email);
+  async findOne(id: string): Promise<UsersDataClass> {
+    return this.usersModel.findOne({ id: id });
   }
 
   async delete(id: string) {

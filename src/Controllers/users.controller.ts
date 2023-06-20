@@ -1,7 +1,7 @@
 import {
   Body,
   Controller,
-  Delete,
+  Query,
   Get,
   Param,
   Post,
@@ -21,14 +21,15 @@ export class UsersController {
   //   await this.UsersService.create(CreateUsersDto);
   // }
 
-  @Get()
-  async findAll(): Promise<UsersDataClass[]> {
-    return this.UsersService.findAll();
-  }
+  // @Get()
+  // async findAll(): Promise<UsersDataClass[]> {
+  //   return this.UsersService.findAll();
+  // }
 
   @UseGuards(AuthGuard)
-  @Get(":id")
-  async findOne(@Param("id") id: string): Promise<UsersDataClass> {
+  @Get()
+  async findOne(@Query("id") id: string): Promise<UsersDataClass> {
+    console.log({ id });
     return this.UsersService.findOne(id);
   }
 

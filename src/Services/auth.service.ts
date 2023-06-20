@@ -19,13 +19,12 @@ export class AuthService {
 
   async signIn(email: string, password: string): Promise<any> {
     const user = await this.findOne(email);
-    console.log({ user });
+
     if (user?.pass !== password) {
       throw new UnauthorizedException();
     }
     const { id } = user;
-    // TODO: Generate a JWT and return it here
-    // instead of the user object
+
     const payload = { sub: user.id, username: user.login };
     return {
       access_token: await this.jwtService.signAsync(payload),

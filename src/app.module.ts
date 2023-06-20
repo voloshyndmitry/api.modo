@@ -12,7 +12,7 @@ import { ClientsModule } from "./Modules/clients.module";
       "mongodb+srv://modo-db-user:xiFT3EugrW8XihZE@modo.gqztrmr.mongodb.net/modo_main_db"
     ),
     AuthModule,
-    UsersModule,
+    // UsersModule,
     ClientsModule,
   ],
   controllers: [AppController],

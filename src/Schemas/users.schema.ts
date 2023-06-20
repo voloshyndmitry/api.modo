@@ -27,7 +27,7 @@ export class UsersDataClass {
   phone: string;
 
   @Prop()
-  image: string;
+  photo: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(UsersDataClass);

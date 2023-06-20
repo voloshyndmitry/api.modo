@@ -2,11 +2,11 @@ export class CreateClientDto {
   readonly id: string;
   readonly email: string;
   readonly pass: string;
-  readonly image: string;
+  readonly photo: string;
   readonly name: string;
   readonly middlename: string;
   readonly surname: string;
-  readonly age: string;
+  readonly dob: string;
   readonly level: string;
   readonly color: string;
   readonly phone: string;

@@ -15,7 +15,7 @@ export class ClientsDataClass {
   pass: string;
 
   @Prop({ required: true })
-  image: string;
+  photo: string;
 
   @Prop({ required: true })
   name: string;
@@ -27,7 +27,7 @@ export class ClientsDataClass {
   middlename: string;
 
   @Prop({ required: true })
-  age: string;
+  dob: string;
 
   @Prop({ required: true })
   level: string;

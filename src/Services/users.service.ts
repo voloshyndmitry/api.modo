@@ -20,8 +20,8 @@ export class UsersService {
     return this.usersModel.find().exec();
   }
 
-  async findOne(id: string): Promise<UsersDataClass> {
-    return this.usersModel.findOne({ _id: id }).exec();
+  async findOne(email: string): Promise<UsersDataClass> {
+    return this.usersModel.findOne((user) => user.email === email);
   }
 
   async delete(id: string) {

@@ -11,11 +11,21 @@ export class ClientsService {
     private usersModel: Model<ClientsDataClass>
   ) {}
 
-  async create(createCatDto: CreateClientDto): Promise<ClientsDataClass> {
+  async create(createClientDto: CreateClientDto): Promise<ClientsDataClass> {
     const id = new Date().getTime();
-    const createdCat = new this.usersModel({ id, ...createCatDto });
+    const createdCat = new this.usersModel({ id, ...createClientDto });
 
     return createdCat.save();
+  }
+
+  async update(createClientDto: CreateClientDto): Promise<ClientsDataClass> {
+    const resp = await this.usersModel.findByIdAndUpdate(
+      { id: createClientDto.id },
+      createClientDto,
+      { new: true }
+    );
+
+    return resp;
   }
 
   async findAll(): Promise<ClientsDataClass[]> {

@@ -29,7 +29,12 @@ export class ClientsService {
   }
 
   async findAll(): Promise<ClientsDataClass[]> {
-    return this.usersModel.find().exec();
+    const clients = await this.usersModel.find().exec();
+
+    return clients.map((client) => {
+      const { _id, ...clientData } = client.toObject();
+      return clientData;
+    });
   }
 
   async findOne(id: string): Promise<ClientsDataClass> {

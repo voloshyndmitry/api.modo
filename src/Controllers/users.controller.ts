@@ -29,7 +29,6 @@ export class UsersController {
   @UseGuards(AuthGuard)
   @Get()
   async findOne(@Query("id") id: string): Promise<UsersDataClass> {
-    console.log({ id });
     return this.UsersService.findOne(id);
   }
 

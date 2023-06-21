@@ -20,6 +20,7 @@ export class UsersService {
   }
 
   async findOne(id: string): Promise<UsersDataClass> {
+    console.log({ id });
     return this.usersModel.findOne({ id: id });
   }
 

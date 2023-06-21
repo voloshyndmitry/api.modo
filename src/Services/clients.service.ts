@@ -19,11 +19,11 @@ export class ClientsService {
   }
 
   async update(createClientDto: CreateClientDto): Promise<ClientsDataClass> {
-    const resp = await this.usersModel.findByIdAndUpdate(
-      { id: createClientDto.id },
-      createClientDto,
-      { new: true }
-    );
+    const { id, ...updateData } = createClientDto;
+
+    const resp = await this.usersModel.findByIdAndUpdate({ id }, updateData, {
+      new: true,
+    });
 
     return resp;
   }

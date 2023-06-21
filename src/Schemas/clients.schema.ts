@@ -5,7 +5,7 @@ export type ClientsDocument = HydratedDocument<ClientsDataClass>;
 
 @Schema({ collection: "clients" })
 export class ClientsDataClass {
-  @Prop()
+  @Prop({ required: true })
   id: string;
 
   @Prop()

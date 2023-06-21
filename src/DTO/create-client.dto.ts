@@ -11,16 +11,11 @@ export class CreateClientDto {
   readonly level?: string;
   readonly color?: string;
   readonly phone: string;
-  readonly address?: string;
+  readonly address?: string[];
   readonly tags?: string[];
   readonly groups?: string[];
-  readonly parents?: {
-    fullName: string;
+  readonly relatives?: {
     relative: string;
-    name: string;
-    middlename: string;
-    surname: string;
-    email: string;
-    phone: string;
+    id: string;
   }[];
 }

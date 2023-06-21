@@ -42,7 +42,7 @@ export class ClientsDataClass {
   phone: string;
 
   @Prop()
-  address: string;
+  address: string[];
 
   @Prop()
   tags: string[];
@@ -51,14 +51,9 @@ export class ClientsDataClass {
   groups: string[];
 
   @Prop()
-  parents: {
-    fullName: string;
+  relatives: {
     relative: string;
-    name: string;
-    middlename: string;
-    surname: string;
-    email: string;
-    phone: string;
+    id: string;
   }[];
 }
 

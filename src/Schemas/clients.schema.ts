@@ -48,6 +48,9 @@ export class ClientsDataClass {
   tags: string[];
 
   @Prop()
+  groups: string[];
+
+  @Prop()
   parents: {
     fullName: string;
     relative: string;

@@ -9,7 +9,7 @@ export class ClientsController {
 
   @Post()
   async create(@Body() CreateClientsDto: CreateClientDto) {
-    await this.ClientsService.create(CreateClientsDto);
+    return this.ClientsService.create(CreateClientsDto);
   }
 
   @Get()

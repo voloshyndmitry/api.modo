@@ -13,6 +13,7 @@ export class CreateClientDto {
   readonly phone: string;
   readonly address?: string;
   readonly tags?: string[];
+  readonly groups?: string[];
   readonly parents?: {
     fullName: string;
     relative: string;

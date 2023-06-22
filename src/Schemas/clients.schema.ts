@@ -61,7 +61,14 @@ export class ClientsDataClass {
   phone: string;
 
   @Prop({ type: AddressSchema })
-  address: Address;
+  address: {
+    streetAddress1: string;
+    streetAddress2: string;
+    postalCode: string;
+    province: string;
+    city: string;
+    country: string;
+  };
 
   @Prop()
   tags: string[];

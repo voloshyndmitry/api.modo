@@ -9,9 +9,15 @@ export class CreateClientDto {
   readonly dob: string;
   readonly gender: string;
   readonly level?: string;
-  readonly color?: string;
   readonly phone: string;
-  readonly address?: string[];
+  readonly address?: {
+    streetAddress1: string;
+    streetAddress2: string;
+    postalCode: string;
+    province: string;
+    city: string;
+    country: string;
+  };
   readonly tags?: string[];
   readonly groups?: string[];
   readonly relatives?: {

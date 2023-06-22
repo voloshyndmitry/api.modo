@@ -10,7 +10,7 @@ export class CreateClientDto {
   readonly gender: string;
   readonly level?: string;
   readonly phone: string;
-  readonly address?: {
+  readonly address: {
     streetAddress1: string;
     streetAddress2: string;
     postalCode: string;

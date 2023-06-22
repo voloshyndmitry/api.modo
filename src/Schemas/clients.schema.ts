@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { HydratedDocument } from "mongoose";
 
 export type ClientsDocument = HydratedDocument<ClientsDataClass>;
-
+@Schema()
 export class Address {
   @Prop()
   streetAddress1: string;
@@ -61,14 +61,7 @@ export class ClientsDataClass {
   phone: string;
 
   @Prop({ type: AddressSchema })
-  address: {
-    streetAddress1: string;
-    streetAddress2: string;
-    postalCode: string;
-    province: string;
-    city: string;
-    country: string;
-  };
+  address: Address;
 
   @Prop()
   tags: string[];

@@ -20,8 +20,17 @@ export class UsersService {
   }
 
   async findOne(id: string): Promise<UsersDataClass> {
-    console.log({ id });
     return this.usersModel.findOne({ id: id });
+  }
+
+  async update(user: CreateUserDto): Promise<CreateUserDto> {
+    const { id, ...updateData } = user;
+
+    const resp = await this.usersModel.findOneAndUpdate({ id }, updateData, {
+      new: true,
+    });
+
+    return resp;
   }
 
   async delete(id: string) {

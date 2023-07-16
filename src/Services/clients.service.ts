@@ -8,12 +8,12 @@ import { ClientsDataClass } from "../Schemas/clients.schema";
 export class ClientsService {
   constructor(
     @InjectModel(ClientsDataClass.name)
-    private usersModel: Model<ClientsDataClass>
+    private clientsModel: Model<ClientsDataClass>
   ) {}
 
   async create(createClientDto: CreateClientDto): Promise<ClientsDataClass> {
     const id = new Date().getTime();
-    const createdCat = new this.usersModel({ id, ...createClientDto });
+    const createdCat = new this.clientsModel({ id, ...createClientDto });
 
     return createdCat.save();
   }
@@ -21,7 +21,7 @@ export class ClientsService {
   async update(createClientDto: CreateClientDto): Promise<ClientsDataClass> {
     const { id, ...updateData } = createClientDto;
 
-    const resp = await this.usersModel.findOneAndUpdate({ id }, updateData, {
+    const resp = await this.clientsModel.findOneAndUpdate({ id }, updateData, {
       new: true,
     });
 
@@ -29,7 +29,7 @@ export class ClientsService {
   }
 
   async findAll(): Promise<ClientsDataClass[]> {
-    const clients = await this.usersModel.find().exec();
+    const clients = await this.clientsModel.find().exec();
 
     return clients.map((client) => {
       const { _id, ...clientData } = client.toObject();
@@ -38,11 +38,11 @@ export class ClientsService {
   }
 
   async findOne(id: string): Promise<ClientsDataClass> {
-    return this.usersModel.findOne({ _id: id }).exec();
+    return this.clientsModel.findOne({ _id: id }).exec();
   }
 
   async delete(id: string) {
-    const deletedCat = await this.usersModel
+    const deletedCat = await this.clientsModel
       .findByIdAndRemove({ _id: id })
       .exec();
     return deletedCat;

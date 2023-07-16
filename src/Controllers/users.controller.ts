@@ -3,7 +3,7 @@ import {
   Controller,
   Query,
   Get,
-  Param,
+  Put,
   Post,
   UseGuards,
 } from "@nestjs/common";
@@ -30,6 +30,12 @@ export class UsersController {
   @Get()
   async findOne(@Query("id") id: string): Promise<UsersDataClass> {
     return this.UsersService.findOne(id);
+  }
+  
+  @UseGuards(AuthGuard)
+  @Put()
+  async update(@Body() UserDto: CreateUserDto) {
+    return this.UsersService.update(UserDto);
   }
 
   // @Delete(":id")

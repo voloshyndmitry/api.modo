@@ -43,6 +43,12 @@ export class ClientsDataClass {
   name: string;
 
   @Prop()
+  sportType: string;
+
+  @Prop()
+  isStudent: string;
+
+  @Prop()
   surname: string;
 
   @Prop()

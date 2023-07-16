@@ -5,6 +5,7 @@ import {
   Get,
   Param,
   Post,
+  Patch,
   Put,
 } from "@nestjs/common";
 import { CreateClientDto } from "../DTO/create-client.dto";
@@ -23,6 +24,11 @@ export class ClientsController {
   @Put()
   async update(@Body() CreateClientsDto: CreateClientDto) {
     return this.ClientsService.update(CreateClientsDto);
+  }
+
+  @Patch()
+  async updateValue(@Body() CreateClientsDto: CreateClientDto) {
+    return this.ClientsService.updateValue(CreateClientsDto);
   }
 
   @Get()

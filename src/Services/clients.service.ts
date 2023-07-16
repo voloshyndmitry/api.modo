@@ -28,6 +28,22 @@ export class ClientsService {
     return resp;
   }
 
+  async updateValue(
+    createClientDto: CreateClientDto
+  ): Promise<ClientsDataClass> {
+    const { id, ...updateData } = createClientDto;
+    const client = await this.findOne(id);
+    const resp = await this.clientsModel.findOneAndUpdate(
+      { id },
+      { ...client, ...updateData },
+      {
+        new: true,
+      }
+    );
+
+    return resp;
+  }
+
   async findAll(): Promise<ClientsDataClass[]> {
     const clients = await this.clientsModel.find().exec();
 

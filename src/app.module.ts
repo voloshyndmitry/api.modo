@@ -5,11 +5,12 @@ import { MongooseModule } from "@nestjs/mongoose";
 import { AuthModule } from "./Modules/auth.module";
 import { UsersModule } from "./Modules/users.module";
 import { ClientsModule } from "./Modules/clients.module";
+require('dotenv').config()
 
 @Module({
   imports: [
     MongooseModule.forRoot(
-      "mongodb+srv://modo-db-user:xiFT3EugrW8XihZE@modo.gqztrmr.mongodb.net/modo_main_db"
+      process.env.MONGO_KEY
     ),
     AuthModule,
     // UsersModule,

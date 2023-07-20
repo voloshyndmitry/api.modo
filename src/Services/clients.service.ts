@@ -59,7 +59,7 @@ export class ClientsService {
 
   async delete(id: string) {
     const deletedCat = await this.clientsModel
-      .findByIdAndRemove({ _id: id })
+      .findByIdAndRemove({ id })
       .exec();
     return deletedCat;
   }

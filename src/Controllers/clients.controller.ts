@@ -43,6 +43,7 @@ export class ClientsController {
 
   @Delete()
   async delete(@Param("id") id: string) {
+    console.log({id})
     return this.ClientsService.delete(id);
   }
 }

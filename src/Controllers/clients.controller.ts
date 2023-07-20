@@ -41,7 +41,7 @@ export class ClientsController {
     return this.ClientsService.findOne(id);
   }
 
-  @Delete(":id")
+  @Delete()
   async delete(@Param("id") id: string) {
     return this.ClientsService.delete(id);
   }

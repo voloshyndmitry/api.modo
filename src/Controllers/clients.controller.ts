@@ -3,9 +3,9 @@ import {
   Controller,
   Delete,
   Get,
-  Param,
   Post,
   Patch,
+  Query,
   Put,
 } from "@nestjs/common";
 import { CreateClientDto } from "../DTO/create-client.dto";
@@ -37,13 +37,12 @@ export class ClientsController {
   }
 
   @Get(":id")
-  async findOne(@Param("id") id: string): Promise<ClientsDataClass> {
+  async findOne(@Query("id") id: string): Promise<ClientsDataClass> {
     return this.ClientsService.findOne(id);
   }
 
   @Delete()
-  async delete(@Param("id") id: string) {
-    console.log({id})
+  async delete(@Query("id") id: string) {
     return this.ClientsService.delete(id);
   }
 }

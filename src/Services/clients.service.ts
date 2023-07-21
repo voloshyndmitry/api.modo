@@ -32,14 +32,11 @@ export class ClientsService {
     createClientDto: CreateClientDto
   ): Promise<ClientsDataClass> {
     const { id, ...updateData } = createClientDto;
-    console.log({createClientDto})
     const client = await this.findOne(id);
+    console.log({createClientDto: { ...client, ...updateData }})
     const resp = await this.clientsModel.findOneAndUpdate(
       { id },
-      { ...client, ...updateData },
-      {
-        new: true,
-      }
+      { ...client, ...updateData }
     );
 
     return resp;

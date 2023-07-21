@@ -1,5 +1,6 @@
 export class CreateClientDto {
   readonly id: string;
+  readonly groupId: string;
   readonly email: string;
   readonly pass?: string;
   readonly photo?: string;
@@ -10,8 +11,7 @@ export class CreateClientDto {
   readonly gender: string;
   readonly level?: string;
   readonly phone: string;
-  readonly isStudent
-  : string;
+  readonly isStudent: string;
   readonly sportType: string;
   readonly address: {
     streetAddress1: string;

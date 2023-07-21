@@ -3,17 +3,20 @@ import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { CreateClientDto } from "../DTO/create-client.dto";
 import { ClientsDataClass } from "../Schemas/clients.schema";
+import { UsersService } from "./users.service";
 
 @Injectable()
 export class ClientsService {
   constructor(
     @InjectModel(ClientsDataClass.name)
-    private clientsModel: Model<ClientsDataClass>
+    private clientsModel: Model<ClientsDataClass>,
+    private usersService: UsersService
   ) {}
 
-  async create(createClientDto: CreateClientDto): Promise<ClientsDataClass> {
+  async create(createClientDto: CreateClientDto, user): Promise<ClientsDataClass> {
     const id = new Date().getTime();
-    const createdCat = new this.clientsModel({ id, ...createClientDto });
+    const currentUser = await this.usersService.findOne(user.sub)
+    const createdCat = new this.clientsModel({ id, ...createClientDto, groupId: currentUser.groupId });
 
     return createdCat.save();
   }
@@ -33,7 +36,7 @@ export class ClientsService {
   ): Promise<ClientsDataClass> {
     const { id, ...updateData } = createClientDto;
     const client = await this.findOne(id);
-    console.log({createClientDto: { ...client, ...updateData }})
+
     const resp = await this.clientsModel.findOneAndUpdate(
       { id },
       { ...client, ...updateData }
@@ -42,8 +45,9 @@ export class ClientsService {
     return resp;
   }
 
-  async findAll(): Promise<ClientsDataClass[]> {
-    const clients = await this.clientsModel.find().exec();
+  async findAll(user): Promise<ClientsDataClass[]> {
+    const currentUser = await this.usersService.findOne(user.sub)
+    const clients = await this.clientsModel.find({ groupId: currentUser.groupId }).exec();
 
     return clients.map((client) => {
       const { _id, ...clientData } = client.toObject();

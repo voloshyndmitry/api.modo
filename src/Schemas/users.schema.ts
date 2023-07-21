@@ -9,6 +9,9 @@ export class UsersDataClass {
   id: string;
 
   @Prop({ required: true })
+  groupId: string;
+
+  @Prop({ required: true })
   name: string;
 
   @Prop({ required: true })

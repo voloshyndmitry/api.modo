@@ -29,6 +29,9 @@ export const AddressSchema = SchemaFactory.createForClass(Address);
 export class ClientsDataClass {
   @Prop({ required: true, type: String })
   id: string;
+  
+  @Prop({ required: true, type: String })
+  groupId: string;
 
   @Prop()
   email: string;

@@ -54,7 +54,7 @@ export class ClientsService {
   }
 
   async findOne(id: string): Promise<ClientsDataClass> {
-    return this.clientsModel.findOne({ _id: id }).exec();
+    return this.clientsModel.findOne({ id: id }).exec();
   }
 
   async delete(id: string) {

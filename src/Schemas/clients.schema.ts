@@ -76,10 +76,7 @@ export class ClientsDataClass {
   tags: string[];
 
   @Prop()
-  groups: {
-    day: string;
-    time: string;
-  }[];
+  groups: string[];
 
   @Prop()
   relatives: {

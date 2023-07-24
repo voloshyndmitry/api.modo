@@ -22,10 +22,7 @@ export class CreateClientDto {
     country: string;
   };
   readonly tags?: string[];
-  readonly groups?: {
-    day: string;
-    time: string;
-  }[];
+  readonly groups?: string[];
   readonly relatives?: {
     relative: string;
     id: string;

@@ -5,6 +5,7 @@ import { MongooseModule } from "@nestjs/mongoose";
 import { AuthModule } from "./Modules/auth.module";
 import { UsersModule } from "./Modules/users.module";
 import { ClientsModule } from "./Modules/clients.module";
+import { EventsModule } from './Modules/events.module';
 require('dotenv').config()
 
 @Module({
@@ -13,8 +14,9 @@ require('dotenv').config()
       process.env.MONGO_KEY
     ),
     AuthModule,
-    // UsersModule,
+    UsersModule,
     ClientsModule,
+    EventsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

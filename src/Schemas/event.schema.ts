@@ -25,11 +25,11 @@ export class EventDataClass {
   @Prop({ required: true, type: String })
   title: string;
 
-  @Prop({ required: true, type: TimeSchema })
-  startTime: Time;
+  @Prop({ required: true, type: String })
+  startTime: string;
   
-  @Prop({ required: true, type: TimeSchema })
-  endTime: Time;
+  @Prop({ required: true, type: String})
+  endTime: string;
 
   @Prop({ required: true, type: String })
   day: string;

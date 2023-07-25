@@ -15,7 +15,7 @@ export class ClientsService {
 
   async publicCreate(createClientDto: CreateClientDto): Promise<ClientsDataClass> {
     const id = new Date().getTime();
-    const createdCat = new this.clientsModel({ id, ...createClientDto });
+    const createdCat = new this.clientsModel({ id, ...createClientDto, groupId: '2' });
 
     return createdCat.save();
   }

@@ -16,7 +16,7 @@ export class EventsService {
   async create(createEventDto: CreateEventDto, user): Promise<EventDataClass> {
     const id = new Date().getTime();
     const currentUser = await this.usersService.findOne(user.sub)
-    const createdEvent = new this.EventsModel({ id, ...createEventDto, groupId: currentUser.groupId });
+    const createdEvent = new this.EventsModel({ ...createEventDto, groupId: currentUser.groupId, id});
 
     return createdEvent.save();
   }

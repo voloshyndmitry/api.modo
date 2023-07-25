@@ -79,6 +79,9 @@ export class ClientsDataClass {
   groups: string[];
 
   @Prop()
+  isApproved: boolean;
+
+  @Prop()
   relatives: {
     relative: string;
     id: string;

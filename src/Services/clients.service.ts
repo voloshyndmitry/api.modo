@@ -13,6 +13,13 @@ export class ClientsService {
     private usersService: UsersService
   ) {}
 
+  async publicCreate(createClientDto: CreateClientDto): Promise<ClientsDataClass> {
+    const id = new Date().getTime();
+    const createdCat = new this.clientsModel({ id, ...createClientDto });
+
+    return createdCat.save();
+  }
+
   async create(createClientDto: CreateClientDto, user): Promise<ClientsDataClass> {
     const id = new Date().getTime();
     const currentUser = await this.usersService.findOne(user.sub)

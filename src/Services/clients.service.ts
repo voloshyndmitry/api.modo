@@ -15,7 +15,7 @@ export class ClientsService {
 
   async publicCreate(createClientDto: CreateClientDto): Promise<ClientsDataClass> {
     const id = new Date().getTime();
-    const createdCat = new this.clientsModel({ id, ...createClientDto, groupId: '2' });
+    const createdCat = new this.clientsModel({ id, ...createClientDto, groupId: '2', isApproved: false });
 
     return createdCat.save();
   }
@@ -23,7 +23,7 @@ export class ClientsService {
   async create(createClientDto: CreateClientDto, user): Promise<ClientsDataClass> {
     const id = new Date().getTime();
     const currentUser = await this.usersService.findOne(user.sub)
-    const createdCat = new this.clientsModel({ id, ...createClientDto, groupId: currentUser.groupId });
+    const createdCat = new this.clientsModel({ id, ...createClientDto, groupId: currentUser.groupId, isApproved: true });
 
     return createdCat.save();
   }

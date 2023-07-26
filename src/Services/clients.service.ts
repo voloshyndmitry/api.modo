@@ -23,7 +23,7 @@ export class ClientsService {
        */
       const allPromises = Object.values(clients).map(async (client) => {
         const newRelatives = client.relatives.map((relativeClient) => {
-          console.log("IN <<<", client)
+
           const relativeId = `rel${new Date().getTime()}`;
           const createdRelativeClient = new this.clientsModel({
             ...relativeClient,
@@ -31,7 +31,7 @@ export class ClientsService {
             groupId,
             isApproved,
           });
-          console.log({createdRelativeClient})
+
           createdRelativeClient.save();
 
           return { id: relativeId, relative: relativeClient.relative };
@@ -45,7 +45,6 @@ export class ClientsService {
           isApproved,
           relatives: newRelatives,
         });
-        console.log({createdClient})
 
         /**
          * return promise before go to the next iteration
@@ -63,6 +62,7 @@ export class ClientsService {
       /**
        * return error if some of iterations has been failed
        */
+      console.log(`publicCreate error: ${error}`)
       return error;
     }
   }

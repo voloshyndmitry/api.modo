@@ -26,8 +26,8 @@ export class ClientsService {
           console.log("IN <<<", client)
           const relativeId = `rel${new Date().getTime()}`;
           const createdRelativeClient = new this.clientsModel({
-            id: relativeId,
             ...relativeClient,
+            id: relativeId,
             groupId,
             isApproved,
           });
@@ -39,8 +39,8 @@ export class ClientsService {
 
         const id = `client${new Date().getTime()}`;
         const createdClient = new this.clientsModel({
-          id,
           ...client,
+          id,
           groupId,
           isApproved,
           relatives: newRelatives,

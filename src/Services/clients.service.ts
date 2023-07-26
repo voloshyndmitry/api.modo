@@ -16,13 +16,14 @@ export class ClientsService {
   async publicCreate(clients: CreateClientDto[]): Promise<string> {
     const groupId = "2";
     const isApproved = false;
-
+    console.log({clients})
     try {
       /**
        * Collect all async operations
        */
       const allPromises = clients.map(async (client) => {
         const newRelatives = client.relatives.map(async (relativeClient) => {
+          console.log("IN <<<", client)
           const relativeId = `rel${new Date().getTime()}`;
           const createdRelativeClient = new this.clientsModel({
             id: relativeId,
@@ -31,7 +32,7 @@ export class ClientsService {
             isApproved,
           });
           console.log({createdRelativeClient})
-          await createdRelativeClient.save();
+          createdRelativeClient.save();
 
           return { id: relativeId, relative: relativeClient.relative };
         });

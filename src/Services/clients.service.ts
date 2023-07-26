@@ -13,19 +13,73 @@ export class ClientsService {
     private usersService: UsersService
   ) {}
 
-  async publicCreate(createClientDto: CreateClientDto): Promise<ClientsDataClass> {
-    const id = new Date().getTime();
-    const createdCat = new this.clientsModel({ id, ...createClientDto, groupId: '2', isApproved: false });
+  async publicCreate(clients: CreateClientDto[]): Promise<string> {
+    const groupId = "2";
+    const isApproved = false;
 
-    return createdCat.save();
+    try {
+      /**
+       * Collect all async operations
+       */
+      const allPromises = clients.map(async (client) => {
+        const newRelatives = client.relatives.map(async (relativeClient) => {
+          const relativeId = `rel${new Date().getTime()}`;
+          const createdRelativeClient = new this.clientsModel({
+            id: relativeId,
+            ...relativeClient,
+            groupId,
+            isApproved,
+          });
+          console.log({createdRelativeClient})
+          await createdRelativeClient.save();
+
+          return { id: relativeId, relative: relativeClient.relative };
+        });
+
+        const id = `client${new Date().getTime()}`;
+        const createdClient = new this.clientsModel({
+          id,
+          ...client,
+          groupId,
+          isApproved,
+          relatives: newRelatives,
+        });
+        console.log({createdClient})
+
+        /**
+         * return promise before go to the next iteration
+         */
+        await createdClient.save();
+      });
+
+      /**
+       * wait all iterations before return success message
+       */
+      await Promise.all(allPromises);
+
+      return "200";
+    } catch (error) {
+      /**
+       * return error if some of iterations has been failed
+       */
+      return error;
+    }
   }
 
-  async create(createClientDto: CreateClientDto, user): Promise<ClientsDataClass> {
+  async create(
+    createClientDto: CreateClientDto,
+    user
+  ): Promise<ClientsDataClass> {
     const id = new Date().getTime();
-    const currentUser = await this.usersService.findOne(user.sub)
-    const createdCat = new this.clientsModel({ id, ...createClientDto, groupId: currentUser.groupId, isApproved: true });
+    const currentUser = await this.usersService.findOne(user.sub);
+    const createdClient = new this.clientsModel({
+      id,
+      ...createClientDto,
+      groupId: currentUser.groupId,
+      isApproved: true,
+    });
 
-    return createdCat.save();
+    return createdClient.save();
   }
 
   async update(createClientDto: CreateClientDto): Promise<ClientsDataClass> {
@@ -53,8 +107,10 @@ export class ClientsService {
   }
 
   async findAll(user): Promise<ClientsDataClass[]> {
-    const currentUser = await this.usersService.findOne(user.sub)
-    const clients = await this.clientsModel.find({ groupId: currentUser.groupId }).exec();
+    const currentUser = await this.usersService.findOne(user.sub);
+    const clients = await this.clientsModel
+      .find({ groupId: currentUser.groupId })
+      .exec();
 
     return clients.map((client) => {
       const { _id, ...clientData } = client.toObject();
@@ -67,9 +123,7 @@ export class ClientsService {
   }
 
   async delete(id: string) {
-    const deletedCat = await this.clientsModel
-      .findOneAndRemove({ id })
-      .exec();
+    const deletedCat = await this.clientsModel.findOneAndRemove({ id }).exec();
     return deletedCat;
   }
 }

@@ -16,12 +16,13 @@ export class ClientsService {
   async publicCreate(clients: CreateClientDto[]): Promise<string> {
     const groupId = "2";
     const isApproved = false;
-    console.log({clients})
+
     try {
       /**
        * Collect all async operations
        */
       const allPromises = Object.values(clients).map(async (client) => {
+        const clientId = `client${new Date().getTime()}`;
         const newRelatives = client.relatives.map((relativeClient) => {
 
           const relativeId = `rel${new Date().getTime()}`;
@@ -30,6 +31,12 @@ export class ClientsService {
             id: relativeId,
             groupId,
             isApproved,
+            relatives: [
+              {
+                id: clientId,
+                relative: 'child'
+              }
+            ]
           });
 
           createdRelativeClient.save();
@@ -37,10 +44,9 @@ export class ClientsService {
           return { id: relativeId, relative: relativeClient.relative };
         });
 
-        const id = `client${new Date().getTime()}`;
         const createdClient = new this.clientsModel({
           ...client,
-          id,
+          id: clientId,
           groupId,
           isApproved,
           relatives: newRelatives,

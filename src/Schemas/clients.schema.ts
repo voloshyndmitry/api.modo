@@ -49,7 +49,7 @@ export class ClientsDataClass {
   sportType: string;
 
   @Prop()
-  isStudent: string;
+  isStudent: boolean;
 
   @Prop()
   surname: string;

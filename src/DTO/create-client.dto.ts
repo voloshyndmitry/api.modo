@@ -11,7 +11,7 @@ export class CreateClientDto {
   readonly gender: string;
   readonly level?: string;
   readonly phone: string;
-  readonly isStudent: string;
+  readonly isStudent: boolean;
   readonly sportType: string;
   readonly isApproved: boolean;
   readonly address: {

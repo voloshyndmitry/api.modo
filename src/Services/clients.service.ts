@@ -21,7 +21,7 @@ export class ClientsService {
       /**
        * Collect all async operations
        */
-      const allPromises = clients.map(async (client) => {
+      const allPromises = Object.values(clients).map(async (client) => {
         const newRelatives = client.relatives.map(async (relativeClient) => {
           console.log("IN <<<", client)
           const relativeId = `rel${new Date().getTime()}`;

@@ -4,6 +4,8 @@ import { InjectModel } from "@nestjs/mongoose";
 import { CreateClientDto } from "../DTO/create-client.dto";
 import { ClientsDataClass } from "../Schemas/clients.schema";
 import { UsersService } from "./users.service";
+import hyperid from "hyperid";
+const generateId = hyperid();
 
 @Injectable()
 export class ClientsService {
@@ -16,33 +18,41 @@ export class ClientsService {
   async publicCreate(clients: CreateClientDto[]): Promise<string> {
     const groupId = "2";
     const isApproved = false;
+    /**
+     * generate array of ids for each client
+     */
+    const userIds = Array.from({ length: clients.length }, () => generateId());
+    let newRelatives;
 
     try {
       /**
        * Collect all async operations
        */
-      const allPromises = Object.values(clients).map(async (client) => {
-        const clientId = `client${new Date().getTime()}`;
-        const newRelatives = client.relatives.map((relativeClient) => {
+      const allPromises = Object.values(clients).map(async (client, index) => {
+        const clientId = `client${generateId()}`;
 
-          const relativeId = `rel${new Date().getTime()}`;
-          const createdRelativeClient = new this.clientsModel({
-            ...relativeClient,
-            id: relativeId,
-            groupId,
-            isApproved,
-            relatives: [
-              {
-                id: clientId,
-                relative: 'child'
-              }
-            ]
+        /**
+         * create newRelatives array only for the first client
+         */
+        if (!index) {
+          newRelatives = client.relatives.map((relativeClient) => {
+            const relativeId = `rel${generateId()}`;
+            const createdRelativeClient = new this.clientsModel({
+              ...relativeClient,
+              id: relativeId,
+              groupId,
+              isApproved,
+              relatives: userIds.map((id) => ({
+                id,
+                relative: "child",
+              })),
+            });
+
+            createdRelativeClient.save();
+
+            return { id: relativeId, relative: relativeClient.relative };
           });
-
-          createdRelativeClient.save();
-
-          return { id: relativeId, relative: relativeClient.relative };
-        });
+        }
 
         const createdClient = new this.clientsModel({
           ...client,
@@ -68,7 +78,7 @@ export class ClientsService {
       /**
        * return error if some of iterations has been failed
        */
-      console.log(`publicCreate error: ${error}`)
+      console.log(`publicCreate error: ${error}`);
       return error;
     }
   }
@@ -77,7 +87,7 @@ export class ClientsService {
     createClientDto: CreateClientDto,
     user
   ): Promise<ClientsDataClass> {
-    const id = new Date().getTime();
+    const id = generateId();
     const currentUser = await this.usersService.findOne(user.sub);
     const createdClient = new this.clientsModel({
       id,

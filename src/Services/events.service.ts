@@ -4,7 +4,8 @@ import { InjectModel } from "@nestjs/mongoose";
 import { UsersService } from "./users.service";
 import { EventDataClass } from "../Schemas/event.schema";
 import { CreateEventDto } from "../DTO/create-event.dto";
-
+import hyperid from "hyperid";
+const generateId = hyperid();
 @Injectable()
 export class EventsService {
   constructor(
@@ -14,7 +15,7 @@ export class EventsService {
   ) {}
 
   async create(createEventDto: CreateEventDto, user): Promise<EventDataClass> {
-    const id = new Date().getTime();
+    const id = `event${generateId()}`;
     const currentUser = await this.usersService.findOne(user.sub)
     const createdEvent = new this.EventsModel({ ...createEventDto, groupId: currentUser.groupId, id});
 

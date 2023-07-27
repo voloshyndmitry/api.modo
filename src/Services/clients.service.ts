@@ -55,7 +55,7 @@ export class ClientsService {
 
         const siblings = userIds.map((id) => ({
           id,
-          relative: "siblings"
+          relative: "sibling"
         })).filter(({id}) => id !== userIds[index])
 
         const createdClient = new this.clientsModel({

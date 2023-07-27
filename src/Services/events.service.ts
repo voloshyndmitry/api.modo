@@ -4,7 +4,7 @@ import { InjectModel } from "@nestjs/mongoose";
 import { UsersService } from "./users.service";
 import { EventDataClass } from "../Schemas/event.schema";
 import { CreateEventDto } from "../DTO/create-event.dto";
-import hyperid from "hyperid";
+const hyperid = require('hyperid')
 const generateId = hyperid();
 @Injectable()
 export class EventsService {

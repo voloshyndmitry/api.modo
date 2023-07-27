@@ -5,4 +5,6 @@ export class CreateEventDto {
   readonly startTime: string;
   readonly endTime: string;
   readonly day: string;
+  readonly description: string;
+  readonly color: string;
 }

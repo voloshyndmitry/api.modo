@@ -33,6 +33,12 @@ export class EventDataClass {
 
   @Prop({ required: true, type: String })
   day: string;
+
+  @Prop({ required: false, type: String })
+  description: string;
+
+  @Prop({ required: false, type: String })
+  color: string;
 }
 
 export const EventSchema = SchemaFactory.createForClass(EventDataClass);

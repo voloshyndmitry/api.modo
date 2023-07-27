@@ -4,7 +4,7 @@ import { InjectModel } from "@nestjs/mongoose";
 import { CreateClientDto } from "../DTO/create-client.dto";
 import { ClientsDataClass } from "../Schemas/clients.schema";
 import { UsersService } from "./users.service";
-const hyperid = require('hyperid')
+const hyperid = require("hyperid");
 const generateId = hyperid({ urlSafe: true });
 
 @Injectable()
@@ -29,44 +29,55 @@ export class ClientsService {
        * Collect all async operations
        */
       const allPromises = Object.values(clients).map(async (client, index) => {
-
         /**
          * create newRelatives array only for the first client
          */
-        if (!index) {
-          newRelatives = client.relatives.map((relativeClient) => {
-            const relativeId = `rel${generateId()}`;
+        if (!index && client.relatives) {
+          const relativeIds = Array.from(
+            { length: client.relatives.length },
+            () => generateId()
+          );
+
+          newRelatives = client.relatives.map((relativeClient, relIndex) => {
+            const reversRelativesChild = userIds.map((id) => ({
+              id,
+              relative: "child",
+            }));
+            
+            const reversRelativesSpouse = relativeIds
+              .map((id) => ({
+                id,
+                relative: "spouse",
+              }))
+              .filter(({ id }) => id !== relativeIds[relIndex]);
+
             const createdRelativeClient = new this.clientsModel({
               ...relativeClient,
-              id: relativeId,
+              id: relativeIds[relIndex],
               groupId,
               isApproved,
-              relatives: userIds.map((id) => ({
-                id,
-                relative: "child",
-              })),
+              relatives: [...reversRelativesChild, ...reversRelativesSpouse],
             });
 
             createdRelativeClient.save();
 
-            return { id: relativeId, relative: relativeClient.relative };
+            return { id: relativeIds[relIndex], relative: relativeClient.relative };
           });
         }
 
-        const siblings = userIds.map((id) => ({
-          id,
-          relative: "sibling"
-        })).filter(({id}) => id !== userIds[index])
+        const siblings = userIds
+          .map((id) => ({
+            id,
+            relative: "sibling",
+          }))
+          .filter(({ id }) => id !== userIds[index]);
 
         const createdClient = new this.clientsModel({
           ...client,
           id: userIds[index],
           groupId,
           isApproved,
-          relatives: [
-            ...siblings,
-            ...newRelatives
-          ],
+          relatives: [...siblings, ...newRelatives],
         });
 
         /**

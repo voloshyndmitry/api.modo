@@ -56,7 +56,7 @@ export class ClientsService {
 
         const createdClient = new this.clientsModel({
           ...client,
-          id: clientId,
+          id: userIds[index],
           groupId,
           isApproved,
           relatives: newRelatives,

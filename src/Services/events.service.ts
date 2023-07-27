@@ -5,7 +5,7 @@ import { UsersService } from "./users.service";
 import { EventDataClass } from "../Schemas/event.schema";
 import { CreateEventDto } from "../DTO/create-event.dto";
 const hyperid = require('hyperid')
-const generateId = hyperid();
+const generateId = hyperid({ urlSafe: true });
 @Injectable()
 export class EventsService {
   constructor(

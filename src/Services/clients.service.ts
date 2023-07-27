@@ -5,7 +5,7 @@ import { CreateClientDto } from "../DTO/create-client.dto";
 import { ClientsDataClass } from "../Schemas/clients.schema";
 import { UsersService } from "./users.service";
 const hyperid = require('hyperid')
-const generateId = hyperid();
+const generateId = hyperid({ urlSafe: true });
 
 @Injectable()
 export class ClientsService {

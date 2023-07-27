@@ -29,7 +29,6 @@ export class ClientsService {
        * Collect all async operations
        */
       const allPromises = Object.values(clients).map(async (client, index) => {
-        const clientId = `client${generateId()}`;
 
         /**
          * create newRelatives array only for the first client
@@ -54,12 +53,20 @@ export class ClientsService {
           });
         }
 
+        const siblings = userIds.map((id) => ({
+          id,
+          relative: "siblings"
+        })).filter(({id}) => id !== userIds[index])
+
         const createdClient = new this.clientsModel({
           ...client,
           id: userIds[index],
           groupId,
           isApproved,
-          relatives: newRelatives,
+          relatives: [
+            ...siblings,
+            ...newRelatives
+          ],
         });
 
         /**

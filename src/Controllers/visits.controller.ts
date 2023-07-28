@@ -16,7 +16,7 @@ import { CreateVisitDto } from "../DTO/create-visit.dto";
 import { VisitDataClass } from "../Schemas/visits.schema";
 import { VisitsService } from "../Services/visits.service";
 
-@Controller("visit_history")
+@Controller("visit")
 export class VisitsController {
   constructor(private readonly VisitsService: VisitsService) {}
 

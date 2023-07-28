@@ -44,7 +44,7 @@ export class ClientsDataClass {
   @Prop({ type: String })
   photo: string;
 
-  @Prop({ required: true })
+  @Prop({ type: String })
   name: string;
 
   @Prop({ type: String })
@@ -59,7 +59,7 @@ export class ClientsDataClass {
   @Prop({ type: String })
   middlename: string;
 
-  @Prop({ required: true, type: String })
+  @Prop({ type: String })
   dob: string;
 
   @Prop({ type: String })

@@ -7,6 +7,7 @@ import { UsersModule } from "./Modules/users.module";
 import { ClientsModule } from "./Modules/clients.module";
 import { EventsModule } from './Modules/events.module';
 import { VisitsModule } from "./Modules/visits.module";
+import { PaymentsModule } from "./Modules/payments.module";
 require('dotenv').config()
 
 @Module({
@@ -18,7 +19,8 @@ require('dotenv').config()
     UsersModule,
     ClientsModule,
     EventsModule,
-    VisitsModule
+    VisitsModule,
+    PaymentsModule
   ],
   controllers: [AppController],
   providers: [AppService],

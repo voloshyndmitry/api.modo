@@ -1,3 +1,5 @@
+import { MetaData } from "../Common/common.interfaces";
+
 export class CreateClientDto {
   readonly id: string;
   readonly groupId: string;
@@ -28,4 +30,10 @@ export class CreateClientDto {
     relative: string;
     id: string;
   }[];
+  readonly paymentOption: string;
+  readonly memberships: string[];
+  readonly status: string;
+  readonly medicalBehavioralInfo: string;
+  readonly created: MetaData;
+  readonly updated: MetaData;
 }

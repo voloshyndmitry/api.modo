@@ -43,7 +43,7 @@ export class ClientsService {
               id,
               relative: "child",
             }));
-            
+
             const reversRelativesSpouse = relativeIds
               .map((id) => ({
                 id,
@@ -61,7 +61,10 @@ export class ClientsService {
 
             createdRelativeClient.save();
 
-            return { id: relativeIds[relIndex], relative: relativeClient.relative };
+            return {
+              id: relativeIds[relIndex],
+              relative: relativeClient.relative,
+            };
           });
         }
 
@@ -72,12 +75,18 @@ export class ClientsService {
           }))
           .filter(({ id }) => id !== userIds[index]);
 
+        const created = {
+          date: new Date().getTime(),
+          userId: 0,
+        };
         const createdClient = new this.clientsModel({
           ...client,
           id: userIds[index],
           groupId,
           isApproved,
           relatives: [...siblings, ...newRelatives],
+          created,
+          updated: created,
         });
 
         /**
@@ -107,35 +116,53 @@ export class ClientsService {
   ): Promise<ClientsDataClass> {
     const id = generateId();
     const currentUser = await this.usersService.findOne(user.sub);
+    const created = {
+      date: new Date().getTime(),
+      userId: 0,
+    };
     const createdClient = new this.clientsModel({
       id,
       ...createClientDto,
       groupId: currentUser.groupId,
       isApproved: true,
+      created,
+      updated: created,
     });
 
     return createdClient.save();
   }
 
-  async update(createClientDto: CreateClientDto): Promise<ClientsDataClass> {
+  async update(createClientDto: CreateClientDto, user): Promise<ClientsDataClass> {
+    const updated = {
+      date: new Date().getTime(),
+      userId: user.sub,
+    };
     const { id, ...updateData } = createClientDto;
-
-    const resp = await this.clientsModel.findOneAndUpdate({ id }, updateData, {
-      new: true,
-    });
+    const resp = await this.clientsModel.findOneAndUpdate(
+      { id },
+      { ...updateData, updated },
+      {
+        new: true,
+      }
+    );
 
     return resp;
   }
 
   async updateValue(
-    createClientDto: CreateClientDto
+    createClientDto: CreateClientDto,
+    user
   ): Promise<ClientsDataClass> {
+    const updated = {
+      date: new Date().getTime(),
+      userId: user.sub,
+    };
     const { id, ...updateData } = createClientDto;
     const client = await this.findOne(id);
 
     const resp = await this.clientsModel.findOneAndUpdate(
       { id },
-      { ...client, ...updateData }
+      { ...client, ...updateData, updated }
     );
 
     return resp;

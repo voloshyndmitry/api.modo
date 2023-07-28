@@ -1,5 +1,7 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { HydratedDocument } from "mongoose";
+import { MetaData } from "../Common/common.interfaces";
+import { MetaDataSchema } from "../Common/common.schema";
 
 export type EventsDocument = HydratedDocument<EventDataClass>;
 
@@ -39,6 +41,12 @@ export class EventDataClass {
 
   @Prop({ required: false, type: String })
   color: string;
+
+  @Prop({ required: true, type: MetaDataSchema })
+  created: MetaData;
+  
+  @Prop({ required: true, type: MetaDataSchema })
+  updated: MetaData;
 }
 
 export const EventSchema = SchemaFactory.createForClass(EventDataClass);

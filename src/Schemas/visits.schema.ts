@@ -1,5 +1,7 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { HydratedDocument } from "mongoose";
+import { MetaData } from "../Common/common.interfaces";
+import { MetaDataSchema } from "../Common/common.schema";
 
 export type VisitsDocument = HydratedDocument<VisitDataClass>;
 
@@ -19,6 +21,12 @@ export class VisitDataClass {
   
   @Prop({ required: true, type: Array})
   clientsIds: string[];
+
+  @Prop({ type: MetaDataSchema })
+  created: MetaData;
+  
+  @Prop({ type: MetaDataSchema })
+  updated: MetaData;
 }
 
 export const VisitSchema = SchemaFactory.createForClass(VisitDataClass);

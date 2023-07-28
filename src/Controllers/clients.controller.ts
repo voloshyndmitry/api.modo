@@ -31,13 +31,13 @@ export class ClientsController {
 
   @UseGuards(AuthGuard)
   @Put()
-  async update(@Body() CreateClientsDto: CreateClientDto) {
-    return this.ClientsService.update(CreateClientsDto);
+  async update(@Body() CreateClientsDto: CreateClientDto, @Request() req: any) {
+    return this.ClientsService.update(CreateClientsDto, req.user);
   }
-
+  @UseGuards(AuthGuard)
   @Patch()
-  async updateValue(@Body() CreateClientsDto: CreateClientDto) {
-    return this.ClientsService.updateValue(CreateClientsDto);
+  async updateValue(@Body() CreateClientsDto: CreateClientDto, @Request() req: any) {
+    return this.ClientsService.updateValue(CreateClientsDto, req.user);
   }
 
   @UseGuards(AuthGuard)

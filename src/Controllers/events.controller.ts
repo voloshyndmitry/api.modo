@@ -28,13 +28,14 @@ export class EventsController {
 
   @UseGuards(AuthGuard)
   @Put()
-  async update(@Body() CreateEventsDto: CreateEventDto) {
-    return this.EventsService.update(CreateEventsDto);
+  async update(@Body() CreateEventsDto: CreateEventDto, @Request() req: any) {
+    return this.EventsService.update(CreateEventsDto, req.user);
   }
 
+  @UseGuards(AuthGuard)
   @Patch()
-  async updateValue(@Body() CreateEventsDto: CreateEventDto) {
-    return this.EventsService.updateValue(CreateEventsDto);
+  async updateValue(@Body() CreateEventsDto: CreateEventDto, @Request() req: any) {
+    return this.EventsService.updateValue(CreateEventsDto, req.user);
   }
 
   @UseGuards(AuthGuard)

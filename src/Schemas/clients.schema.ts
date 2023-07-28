@@ -1,5 +1,7 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { HydratedDocument } from "mongoose";
+import { MetaData } from "../Common/common.interfaces";
+import { MetaDataSchema } from "../Common/common.schema";
 
 export type ClientsDocument = HydratedDocument<ClientsDataClass>;
 @Schema()
@@ -33,7 +35,7 @@ export class ClientsDataClass {
   @Prop({ required: true, type: String })
   groupId: string;
 
-  @Prop()
+  @Prop({required: true})
   email: string;
 
   @Prop()
@@ -42,7 +44,7 @@ export class ClientsDataClass {
   @Prop()
   photo: string;
 
-  @Prop()
+  @Prop({required: true})
   name: string;
 
   @Prop()
@@ -51,13 +53,13 @@ export class ClientsDataClass {
   @Prop()
   isStudent: boolean;
 
-  @Prop()
+  @Prop({required: true})
   surname: string;
 
   @Prop()
   middlename: string;
 
-  @Prop()
+  @Prop({required: true})
   dob: string;
 
   @Prop()
@@ -86,6 +88,24 @@ export class ClientsDataClass {
     relative: string;
     id: string;
   }[];
+
+  @Prop()
+  paymentOption: string;
+
+  @Prop()
+  memberships: string[];
+
+  @Prop()
+  status: string;
+
+  @Prop()
+  medicalBehavioralInfo: string;
+  
+  @Prop({required: true, type: MetaDataSchema })
+  created: MetaData;
+  
+  @Prop({required: true, type: MetaDataSchema })
+  updated: MetaData;
 }
 
 export const ClientSchema = SchemaFactory.createForClass(ClientsDataClass);

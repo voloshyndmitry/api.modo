@@ -4,7 +4,7 @@ import { InjectModel } from "@nestjs/mongoose";
 import { UsersService } from "./users.service";
 import { EventDataClass } from "../Schemas/event.schema";
 import { CreateEventDto } from "../DTO/create-event.dto";
-const hyperid = require('hyperid')
+const hyperid = require("hyperid");
 const generateId = hyperid({ urlSafe: true });
 @Injectable()
 export class EventsService {
@@ -16,39 +16,56 @@ export class EventsService {
 
   async create(createEventDto: CreateEventDto, user): Promise<EventDataClass> {
     const id = `event${generateId()}`;
-    const currentUser = await this.usersService.findOne(user.sub)
-    const createdEvent = new this.EventsModel({ ...createEventDto, groupId: currentUser.groupId, id});
+    const created = {
+      date: new Date().getTime(),
+      userId: user.sub,
+    };
+    const currentUser = await this.usersService.findOne(user.sub);
+    const createdEvent = new this.EventsModel({
+      ...createEventDto,
+      groupId: currentUser.groupId,
+      id,
+      created,
+      updated: created,
+    });
 
     return createdEvent.save();
   }
 
-  async update(createEventDto: CreateEventDto): Promise<EventDataClass> {
+  async update(createEventDto: CreateEventDto, user): Promise<EventDataClass> {
     const { id, ...updateData } = createEventDto;
-
-    const resp = await this.EventsModel.findOneAndUpdate({ id }, updateData, {
+    const updated = {
+      date: new Date().getTime(),
+      userId: user.sub,
+    };
+    const resp = await this.EventsModel.findOneAndUpdate({ id }, {...updateData, updated}, {
       new: true,
     });
 
     return resp;
   }
 
-  async updateValue(
-    createEventDto: CreateEventDto
-  ): Promise<EventDataClass> {
+  async updateValue(createEventDto: CreateEventDto, user): Promise<EventDataClass> {
     const { id, ...updateData } = createEventDto;
+    const updated = {
+      date: new Date().getTime(),
+      userId: user.sub,
+    };
     const Event = await this.findOne(id);
 
     const resp = await this.EventsModel.findOneAndUpdate(
       { id },
-      { ...Event, ...updateData }
+      { ...Event, ...updateData, updated }
     );
 
     return resp;
   }
 
   async findAll(user): Promise<EventDataClass[]> {
-    const currentUser = await this.usersService.findOne(user?.sub)
-    const Events = await this.EventsModel.find({ groupId: currentUser.groupId }).exec();
+    const currentUser = await this.usersService.findOne(user?.sub);
+    const Events = await this.EventsModel.find({
+      groupId: currentUser.groupId,
+    }).exec();
 
     return Events.map((Event) => {
       const { _id, ...EventData } = Event.toObject();
@@ -61,9 +78,7 @@ export class EventsService {
   }
 
   async delete(id: string) {
-    const deletedCat = await this.EventsModel
-      .findOneAndRemove({ id })
-      .exec();
+    const deletedCat = await this.EventsModel.findOneAndRemove({ id }).exec();
     return deletedCat;
   }
 }

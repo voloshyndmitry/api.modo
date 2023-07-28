@@ -5,8 +5,7 @@ import { UsersService } from "./users.service";
 import { CreatePaymentDto } from "../DTO/create-payment.dto";
 import { PaymentDataClass } from "../Schemas/payment.schema";
 
-
-const hyperid = require('hyperid')
+const hyperid = require("hyperid");
 const generateId = hyperid({ urlSafe: true });
 @Injectable()
 export class PaymentsService {
@@ -17,40 +16,57 @@ export class PaymentsService {
   ) {}
 
   async create(createPaymentDto: CreatePaymentDto, user): Promise<PaymentDataClass> {
-    const id = `Payment${generateId()}`;
-    const currentUser = await this.usersService.findOne(user.sub)
-    const createdPayment = new this.PaymentsModel({ ...createPaymentDto, groupId: currentUser.groupId, id});
+    const id = `event${generateId()}`;
+    const created = {
+      date: new Date().getTime(),
+      userId: user.sub,
+    };
+    const currentUser = await this.usersService.findOne(user.sub);
+    const createdPayment = new this.PaymentsModel({
+      ...createPaymentDto,
+      groupId: currentUser.groupId,
+      id,
+      created,
+      updated: created,
+    });
 
     return createdPayment.save();
   }
 
-  async update(createPaymentDto: CreatePaymentDto): Promise<PaymentDataClass> {
+  async update(createPaymentDto: CreatePaymentDto, user): Promise<PaymentDataClass> {
     const { id, ...updateData } = createPaymentDto;
-
-    const resp = await this.PaymentsModel.findOneAndUpdate({ id }, updateData, {
+    const updated = {
+      date: new Date().getTime(),
+      userId: user.sub,
+    };
+    const resp = await this.PaymentsModel.findOneAndUpdate({ id }, {...updateData, updated}, {
       new: true,
     });
 
     return resp;
   }
 
-  async updateValue(
-    createPaymentDto: CreatePaymentDto
-  ): Promise<PaymentDataClass> {
+  async updateValue(createPaymentDto: CreatePaymentDto, user): Promise<PaymentDataClass> {
     const { id, ...updateData } = createPaymentDto;
+    const updated = {
+      date: new Date().getTime(),
+      userId: user.sub,
+    };
     const Payment = await this.findOne(id);
 
     const resp = await this.PaymentsModel.findOneAndUpdate(
       { id },
-      { ...Payment, ...updateData }
+      { ...Payment, ...updateData, updated }
     );
 
     return resp;
   }
 
   async findAll(user): Promise<PaymentDataClass[]> {
-    const currentUser = await this.usersService.findOne(user?.sub)
-    const Payments = await this.PaymentsModel.find({ groupId: currentUser.groupId }).exec();
+    const currentUser = await this.usersService.findOne(user?.sub);
+    const Payments = await this.PaymentsModel.find({
+      groupId: currentUser.groupId,
+    }).exec();
 
     return Payments.map((Payment) => {
       const { _id, ...PaymentData } = Payment.toObject();
@@ -63,9 +79,7 @@ export class PaymentsService {
   }
 
   async delete(id: string) {
-    const deletedCat = await this.PaymentsModel
-      .findOneAndRemove({ id })
-      .exec();
+    const deletedCat = await this.PaymentsModel.findOneAndRemove({ id }).exec();
     return deletedCat;
   }
 }

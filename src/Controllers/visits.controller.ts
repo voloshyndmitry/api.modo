@@ -13,10 +13,10 @@ import {
 
 import { AuthGuard } from "../Services/auth.guard";
 import { CreateVisitDto } from "../DTO/create-visit.dto";
-import { VisitsService } from "../Services/visits.service";
 import { VisitDataClass } from "../Schemas/visits.schema";
+import { VisitsService } from "../Services/visits.service";
 
-@Controller("visits")
+@Controller("visit_history")
 export class VisitsController {
   constructor(private readonly VisitsService: VisitsService) {}
 
@@ -28,13 +28,14 @@ export class VisitsController {
 
   @UseGuards(AuthGuard)
   @Put()
-  async update(@Body() CreateVisitsDto: CreateVisitDto) {
-    return this.VisitsService.update(CreateVisitsDto);
+  async update(@Body() CreateVisitsDto: CreateVisitDto, @Request() req: any) {
+    return this.VisitsService.update(CreateVisitsDto, req.user);
   }
 
+  @UseGuards(AuthGuard)
   @Patch()
-  async updateValue(@Body() CreateVisitsDto: CreateVisitDto) {
-    return this.VisitsService.updateValue(CreateVisitsDto);
+  async updateValue(@Body() CreateVisitsDto: CreateVisitDto, @Request() req: any) {
+    return this.VisitsService.updateValue(CreateVisitsDto, req.user);
   }
 
   @UseGuards(AuthGuard)

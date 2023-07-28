@@ -14,7 +14,7 @@ import {
 import { AuthGuard } from "../Services/auth.guard";
 import { CreatePaymentDto } from "../DTO/create-payment.dto";
 import { PaymentDataClass } from "../Schemas/payment.schema";
-import { PaymentsService } from "../Services/payments.service";
+import {PaymentsService} from "../Services/payments.service";
 
 @Controller("payments")
 export class PaymentsController {
@@ -28,13 +28,14 @@ export class PaymentsController {
 
   @UseGuards(AuthGuard)
   @Put()
-  async update(@Body() CreatePaymentsDto: CreatePaymentDto) {
-    return this.PaymentsService.update(CreatePaymentsDto);
+  async update(@Body() CreatePaymentsDto: CreatePaymentDto, @Request() req: any) {
+    return this.PaymentsService.update(CreatePaymentsDto, req.user);
   }
 
+  @UseGuards(AuthGuard)
   @Patch()
-  async updateValue(@Body() CreatePaymentsDto: CreatePaymentDto) {
-    return this.PaymentsService.updateValue(CreatePaymentsDto);
+  async updateValue(@Body() CreatePaymentsDto: CreatePaymentDto, @Request() req: any) {
+    return this.PaymentsService.updateValue(CreatePaymentsDto, req.user);
   }
 
   @UseGuards(AuthGuard)

@@ -23,7 +23,10 @@ export class ClientsService {
      */
     const userIds = Array.from({ length: clients.length }, () => generateId());
     let newRelatives;
-
+    const created = {
+      date: new Date().getTime(),
+      userId: 0,
+    };
     try {
       /**
        * Collect all async operations
@@ -57,6 +60,8 @@ export class ClientsService {
               groupId,
               isApproved,
               relatives: [...reversRelativesChild, ...reversRelativesSpouse],
+              created,
+              updated: created
             });
 
             createdRelativeClient.save();
@@ -75,10 +80,7 @@ export class ClientsService {
           }))
           .filter(({ id }) => id !== userIds[index]);
 
-        const created = {
-          date: new Date().getTime(),
-          userId: 0,
-        };
+        
         const createdClient = new this.clientsModel({
           ...client,
           id: userIds[index],

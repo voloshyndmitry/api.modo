@@ -31,44 +31,44 @@ export const AddressSchema = SchemaFactory.createForClass(Address);
 export class ClientsDataClass {
   @Prop({ required: true, type: String })
   id: string;
-  
+
   @Prop({ required: true, type: String })
   groupId: string;
 
-  @Prop({required: true})
+  @Prop({ required: true })
   email: string;
 
-  @Prop()
+  @Prop({ type: String })
   pass: string;
 
-  @Prop()
+  @Prop({ type: String })
   photo: string;
 
-  @Prop({required: true})
+  @Prop({ required: true })
   name: string;
 
-  @Prop()
+  @Prop({ type: String })
   sportType: string;
 
   @Prop()
   isStudent: boolean;
 
-  @Prop({required: true})
+  @Prop({ required: true, type: String })
   surname: string;
 
-  @Prop()
+  @Prop({ type: String })
   middlename: string;
 
-  @Prop({required: true})
+  @Prop({ required: true, type: String })
   dob: string;
 
-  @Prop()
+  @Prop({ type: String })
   gender: string;
 
-  @Prop()
+  @Prop({ type: String })
   level: string;
 
-  @Prop()
+  @Prop({ type: String })
   phone: string;
 
   @Prop({ type: AddressSchema })
@@ -89,7 +89,7 @@ export class ClientsDataClass {
     id: string;
   }[];
 
-  @Prop()
+  @Prop({ type: String })
   paymentOption: string;
 
   @Prop()
@@ -100,11 +100,11 @@ export class ClientsDataClass {
 
   @Prop()
   medicalBehavioralInfo: string;
-  
-  @Prop({required: true, type: MetaDataSchema })
+
+  @Prop({ required: true, type: MetaDataSchema })
   created: MetaData;
-  
-  @Prop({required: true, type: MetaDataSchema })
+
+  @Prop({ required: true, type: MetaDataSchema })
   updated: MetaData;
 }
 

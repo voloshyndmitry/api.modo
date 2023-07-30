@@ -22,7 +22,7 @@ export class PaymentDataClass {
   @Prop({ required: true, type: String })
   title: string;
 
-  @Prop({ required: true, type: String })
+  @Prop({ type: String })
   description: string;
 
   @Prop({ required: true, type: String })

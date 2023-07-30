@@ -1,1 +1,0 @@
-web: node_modules/.bin/pm2 start pm2.config.js

@@ -6,6 +6,7 @@ export class CreatePaymentDto {
   readonly currency: string;
   readonly type: string;
   readonly title: string;
+  readonly date: string;
   readonly description: string;
   readonly clientId: string;
   readonly created: MetaData;

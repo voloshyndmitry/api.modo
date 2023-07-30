@@ -23,6 +23,9 @@ export class PaymentDataClass {
   title: string;
 
   @Prop({ type: String })
+  date: string;
+
+  @Prop({ type: String })
   description: string;
 
   @Prop({ required: true, type: String })

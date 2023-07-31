@@ -12,16 +12,15 @@ import {
 } from "@nestjs/common";
 import { UAParser } from "ua-parser-js";
 import { AuthGuard } from "../Services/auth.guard";
-import { CreateEventDto } from "../DTO/create-event.dto";
-// import { AnalyticsService } from "../Services/events.service";.
+import { AnalyticsService } from "../Services/analytics.service";
 import { EventDataClass } from "../Schemas/event.schema";
+import { AnalyticDataClass } from "../Schemas/analytics.schema";
 const geoip = require('geoip-lite');
 const requestIp = require('request-ip');
 
 @Controller("analytics")
 export class AnalyticsController {
-  constructor() {}
-  // constructor(private readonly AnalyticsService: AnalyticsService) {}
+  constructor(private readonly AnalyticsService: AnalyticsService) {}
 
   // @UseGuards(AuthGuard)
   // @Post()
@@ -41,22 +40,24 @@ export class AnalyticsController {
   //   return this.AnalyticsService.updateValue(CreateAnalyticsDto, req.user);
   // }
 
-  // @UseGuards(AuthGuard)
-  @Get()
-  async findAll(@Request() req: any) {
+  @UseGuards(AuthGuard)
+  @Get("/init")
+  async init(@Request() req: any) {
     const clientIp = requestIp.getClientIp(req); 
-    let parser = new UAParser(req.get("user-agent")); // you need to pass the user-agent for nodejs
+    const parser = new UAParser(req.get("user-agent")); // you need to pass the user-agent for nodejs
     const location = geoip.lookup(clientIp);
-    let parserResults = parser.getResult();
-    console.log(parserResults);
+    const parserResults = parser.getResult();
+    const analytics = {...parserResults, location, ip: clientIp}
+    console.log(analytics);
+    this.AnalyticsService.create(analytics, req.user)
     return {...parserResults, location, ip: clientIp};
   }
 
-  // @UseGuards(AuthGuard)
-  // @Get(":id")
-  // async findOne(@Query("id") id: string): Promise<EventDataClass> {
-  //   return this.AnalyticsService.findOne(id);
-  // }
+  @UseGuards(AuthGuard)
+  @Get()
+  async findAll(@Request() req: any): Promise<AnalyticDataClass[]> {
+    return this.AnalyticsService.findAll(req.user);
+  }
 
   // @UseGuards(AuthGuard)
   // @Delete()

@@ -3,6 +3,7 @@ module.exports = {
     name: "app",
     script: "./dist/main.js",
     instances: "max",
+    max_memory_restart: '500M',
     env: {
       NODE_ENV: "development",
     },

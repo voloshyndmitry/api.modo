@@ -49,8 +49,7 @@ export class AnalyticsController {
     console.log(analytics);
     console.log({user});
 
-    this.AnalyticsService.create(analytics, user);
-    return { ...parserResults, location, ip: clientIp };
+    return this.AnalyticsService.create(analytics, user);
   }
 
   private async getUserFromToken(token: string) {

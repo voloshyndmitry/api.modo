@@ -6,7 +6,7 @@ import { AnalyticDataClass } from "../Schemas/analytics.schema";
 import { CreateAnalyticDto } from "../DTO/create-analytic.dto";
 
 
-const hyperid = require("analytics");
+const hyperid = require("hyperid");
 const generateId = hyperid({ urlSafe: true });
 @Injectable()
 export class AnalyticsService {

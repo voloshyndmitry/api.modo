@@ -7,7 +7,7 @@ export type AnalyticsDocument = HydratedDocument<AnalyticDataClass>;
 export class AnalyticDataClass {
   @Prop({ required: true, type: String })
   id: string;
-  
+
   @Prop({ required: true, type: String })
   groupId: string;
 
@@ -33,16 +33,16 @@ export class AnalyticDataClass {
     version: string;
   };
   
-  @Prop()
+  @Prop({ type: Object })
   device: {
     vendor: string;
     model: string;
   };
   
-  @Prop()
+  @Prop({ type: Object })
   cpu: any;
   
-  @Prop()
+  @Prop({ type: Object })
   location: {
     range: number[];
     country: string;

@@ -1,18 +1,17 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UsersModule } from './users.module';
-// import { VisitDataClass, VisitSchema } from '../Schemas/visits.schema';
-// import { VisitsService } from '../Services/visits.service';
-// import { VisitsController } from '../Controllers/visits.controller';
 import {AnalyticsController} from '../Controllers/analytics.controller'
+import { AnalyticDataClass, AnalyticSchema } from '../Schemas/analytics.schema';
+import { AnalyticsService } from '../Services/analytics.service';
 @Module({
     imports: [
     UsersModule,
-    // MongooseModule.forFeature([
-    //   { name: VisitDataClass.name, schema: VisitSchema },
-    // ]),
+    MongooseModule.forFeature([
+      { name: AnalyticDataClass.name, schema: AnalyticSchema },
+    ]),
   ],
   controllers: [AnalyticsController],
-  // providers: [VisitsService],
+  providers: [AnalyticsService],
 })
 export class AnalyticsModule {}

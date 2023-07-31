@@ -36,4 +36,5 @@ export class CreateClientDto {
   readonly medicalBehavioralInfo: string;
   readonly created: MetaData;
   readonly updated: MetaData;
+  readonly price: number;
 }

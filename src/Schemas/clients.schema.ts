@@ -95,11 +95,14 @@ export class ClientsDataClass {
   @Prop()
   memberships: string[];
 
-  @Prop()
+  @Prop({ type: String })
   status: string;
 
-  @Prop()
+  @Prop({ type: String })
   medicalBehavioralInfo: string;
+  
+  @Prop({ type: Number })
+  price: number;
 
   @Prop({ required: true, type: MetaDataSchema })
   created: MetaData;

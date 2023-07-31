@@ -12,7 +12,7 @@ export class Offer {
 
   @Prop()
   description: string;
-  
+
   @Prop()
   price: string;
 }
@@ -25,25 +25,26 @@ export class MembershipDataClass {
   id: string;
 
   @Prop({ required: true, type: String })
-  title: string;
+  value: string;
 
   @Prop({ required: true, type: String })
-  description: string;
+  label: string;
 
   @Prop({ required: true, type: String })
   price: string;
 
-  @Prop({ required: true, type: String })
+  @Prop({ type: String })
   currency: string;
 
-  @Prop({ required: true, type: OfferSchema })
+  @Prop({ type: OfferSchema })
   specialOffers: Offer;
 
   @Prop({ type: MetaDataSchema })
   created: MetaData;
-  
+
   @Prop({ type: MetaDataSchema })
   updated: MetaData;
 }
 
-export const MembershipSchema = SchemaFactory.createForClass(MembershipDataClass);
+export const MembershipSchema =
+  SchemaFactory.createForClass(MembershipDataClass);

@@ -2,8 +2,8 @@ import { MetaData } from "../Common/common.interfaces";
 
 export class CreateMembershipDto {
   readonly id: string;
-  readonly title: string;
-  readonly description: string;
+  readonly value: string;
+  readonly label: string;
   readonly price: string;
   readonly currency: string;
   readonly specialOffers: Offer;

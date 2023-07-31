@@ -9,48 +9,61 @@ import {
   Put,
   UseGuards,
   Request,
+  UnauthorizedException,
 } from "@nestjs/common";
 import { UAParser } from "ua-parser-js";
 import { AuthGuard } from "../Services/auth.guard";
 import { AnalyticsService } from "../Services/analytics.service";
 import { EventDataClass } from "../Schemas/event.schema";
 import { AnalyticDataClass } from "../Schemas/analytics.schema";
+import { JwtService } from "@nestjs/jwt";
+import { request } from "express";
+import { jwtConstants } from "../Constants/auth.constants";
 const geoip = require('geoip-lite');
 const requestIp = require('request-ip');
 
+interface CustomHeaders extends Headers {
+  authorization?: string
+}
+
+interface CustomRequest extends Request {
+  headers: CustomHeaders
+}
+
 @Controller("analytics")
 export class AnalyticsController {
-  constructor(private readonly AnalyticsService: AnalyticsService) {}
+  constructor(private readonly AnalyticsService: AnalyticsService, private jwtService: JwtService) {}
 
-  // @UseGuards(AuthGuard)
-  // @Post()
-  // async create(@Body() CreateAnalyticsDto: CreateEventDto, @Request() req: any) {
-  //   return this.AnalyticsService.create(CreateAnalyticsDto, req.user);
-  // }
-
-  // @UseGuards(AuthGuard)
-  // @Put()
-  // async update(@Body() CreateAnalyticsDto: CreateEventDto, @Request() req: any) {
-  //   return this.AnalyticsService.update(CreateAnalyticsDto, req.user);
-  // }
-
-  // @UseGuards(AuthGuard)
-  // @Patch()
-  // async updateValue(@Body() CreateAnalyticsDto: CreateEventDto, @Request() req: any) {
-  //   return this.AnalyticsService.updateValue(CreateAnalyticsDto, req.user);
-  // }
-
-  @UseGuards(AuthGuard)
   @Get("/init")
   async init(@Request() req: any) {
     const clientIp = requestIp.getClientIp(req); 
+    const token = this.extractTokenFromHeader(req as CustomRequest);
+    const user = this.getUserFromToken(token);
     const parser = new UAParser(req.get("user-agent")); // you need to pass the user-agent for nodejs
     const location = geoip.lookup(clientIp);
     const parserResults = parser.getResult();
     const analytics = {...parserResults, location, ip: clientIp}
     console.log(analytics);
-    this.AnalyticsService.create(analytics, req.user)
+    this.AnalyticsService.create(analytics, user)
     return {...parserResults, location, ip: clientIp};
+  }
+
+  private async getUserFromToken(token: string) {
+    try {
+      const payload = await this.jwtService.verifyAsync(token, {
+        secret: jwtConstants.secret,
+      });
+      // 💡 We're assigning the payload to the request object here
+      // so that we can access it in our route handlers
+      return payload;
+    } catch {
+      return {sub: '1'};
+    }
+  }
+
+  private extractTokenFromHeader(request: CustomRequest): string | undefined {
+    const [type, token] = request.headers.authorization?.split(" ") ?? [];
+    return type === "Bearer" ? token : undefined;
   }
 
   @UseGuards(AuthGuard)

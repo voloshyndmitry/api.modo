@@ -1,5 +1,7 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { HydratedDocument } from "mongoose";
+import { MetaData } from "../Common/common.interfaces";
+import { MetaDataSchema } from "../Common/common.schema";
 
 export type AnalyticsDocument = HydratedDocument<AnalyticDataClass>;
 
@@ -57,6 +59,9 @@ export class AnalyticDataClass {
   
   @Prop({ type: String })
   ip: string;
+
+  @Prop({ required: true, type: MetaDataSchema })
+  created: MetaData;
 }
 
 export const AnalyticSchema = SchemaFactory.createForClass(AnalyticDataClass);

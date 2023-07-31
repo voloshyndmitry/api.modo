@@ -19,33 +19,38 @@ import { AnalyticDataClass } from "../Schemas/analytics.schema";
 import { JwtService } from "@nestjs/jwt";
 import { request } from "express";
 import { jwtConstants } from "../Constants/auth.constants";
-const geoip = require('geoip-lite');
-const requestIp = require('request-ip');
+const geoip = require("geoip-lite");
+const requestIp = require("request-ip");
 
 interface CustomHeaders extends Headers {
-  authorization?: string
+  authorization?: string;
 }
 
 interface CustomRequest extends Request {
-  headers: CustomHeaders
+  headers: CustomHeaders;
 }
 
 @Controller("analytics")
 export class AnalyticsController {
-  constructor(private readonly AnalyticsService: AnalyticsService, private jwtService: JwtService) {}
+  constructor(
+    private readonly AnalyticsService: AnalyticsService,
+    private jwtService: JwtService
+  ) {}
 
   @Get("/init")
   async init(@Request() req: any) {
-    const clientIp = requestIp.getClientIp(req); 
+    const clientIp = requestIp.getClientIp(req);
     const token = this.extractTokenFromHeader(req as CustomRequest);
-    const user = this.getUserFromToken(token);
+    const user = await this.getUserFromToken(token);
     const parser = new UAParser(req.get("user-agent")); // you need to pass the user-agent for nodejs
     const location = geoip.lookup(clientIp);
     const parserResults = parser.getResult();
-    const analytics = {...parserResults, location, ip: clientIp}
+    const analytics = { ...parserResults, location, ip: clientIp };
     console.log(analytics);
-    this.AnalyticsService.create(analytics, user)
-    return {...parserResults, location, ip: clientIp};
+    console.log({user});
+
+    this.AnalyticsService.create(analytics, user);
+    return { ...parserResults, location, ip: clientIp };
   }
 
   private async getUserFromToken(token: string) {
@@ -57,7 +62,7 @@ export class AnalyticsController {
       // so that we can access it in our route handlers
       return payload;
     } catch {
-      return {sub: '1'};
+      return { sub: "1" };
     }
   }
 

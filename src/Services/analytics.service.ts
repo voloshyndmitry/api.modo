@@ -16,21 +16,28 @@ export class AnalyticsService {
     private usersService: UsersService
   ) {}
 
-  async create(createAnalyticDto: CreateAnalyticDto, user): Promise<AnalyticDataClass> {
+  async create(createAnalyticDto: CreateAnalyticDto, user): Promise<boolean> {
     const id = `event${generateId()}`;
     const created = {
       date: new Date().getTime(),
       userId: user.sub,
     };
-    const currentUser = await this.usersService.findOne(user.sub);
-    const createdAnalytic = new this.AnalyticsModel({
-      ...createAnalyticDto,
-      groupId: currentUser.groupId,
-      id,
-      created,
-    });
+    try{
+      const currentUser = await this.usersService.findOne(user.sub);
+      const createdAnalytic = new this.AnalyticsModel({
+        ...createAnalyticDto,
+        groupId: currentUser.groupId,
+        id,
+        created,
+      });
+  
+      await createdAnalytic.save();
 
-    return createdAnalytic.save();
+      return true
+    } catch {
+      return false
+    }
+    
   }
 
   async update(createAnalyticDto: CreateAnalyticDto, user): Promise<AnalyticDataClass> {

@@ -1,6 +1,6 @@
 import { MetaData } from "../Common/common.interfaces";
 
-export class CreateMembershipDto {
+export class CreateProductDto {
   readonly id: string;
   readonly value: string;
   readonly label: string;

@@ -31,6 +31,9 @@ export class PaymentDataClass {
   @Prop({ required: true, type: String })
   clientId: string;
 
+  @Prop({ required: true, type: String })
+  groupId: string;
+
   @Prop({ required: true, type: MetaDataSchema })
   created: MetaData;
   

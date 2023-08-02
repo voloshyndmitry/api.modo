@@ -3,7 +3,7 @@ import { HydratedDocument } from "mongoose";
 import { MetaData } from "../Common/common.interfaces";
 import { MetaDataSchema } from "../Common/common.schema";
 
-export type MembershipsDocument = HydratedDocument<MembershipDataClass>;
+export type ProductsDocument = HydratedDocument<ProductDataClass>;
 
 @Schema()
 export class Offer {
@@ -19,8 +19,8 @@ export class Offer {
 
 export const OfferSchema = SchemaFactory.createForClass(Offer);
 
-@Schema({ collection: "memberships" })
-export class MembershipDataClass {
+@Schema({ collection: "products" })
+export class ProductDataClass {
   @Prop({ required: true, type: String })
   id: string;
 
@@ -41,7 +41,6 @@ export class MembershipDataClass {
 
   @Prop({ type: OfferSchema })
   specialOffers: Offer;
-  
 
   @Prop({ type: MetaDataSchema })
   created: MetaData;
@@ -50,5 +49,4 @@ export class MembershipDataClass {
   updated: MetaData;
 }
 
-export const MembershipSchema =
-  SchemaFactory.createForClass(MembershipDataClass);
+export const ProductSchema = SchemaFactory.createForClass(ProductDataClass);

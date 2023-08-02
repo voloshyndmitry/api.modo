@@ -10,6 +10,7 @@ import { VisitsModule } from "./Modules/visits.module";
 import { PaymentsModule } from "./Modules/payments.module";
 import { MembershipsModule } from "./Modules/memberships.module";
 import { AnalyticsModule } from "./Modules/analytics.module";
+import { ProductsModule } from "./Modules/products.module";
 
 require('dotenv').config()
 
@@ -25,7 +26,8 @@ require('dotenv').config()
     VisitsModule,
     PaymentsModule,
     MembershipsModule,
-    AnalyticsModule
+    AnalyticsModule,
+    ProductsModule
   ],
   controllers: [AppController],
   providers: [AppService],

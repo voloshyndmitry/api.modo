@@ -9,6 +9,7 @@ export class CreatePaymentDto {
   readonly date: string;
   readonly description: string;
   readonly clientId: string;
+  readonly groupId: string;
   readonly created: MetaData;
   readonly updated: MetaData;
 }

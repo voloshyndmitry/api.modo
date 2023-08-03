@@ -8,18 +8,40 @@ import {
   Query,
   Put,
   UseGuards,
-  Request
+  Request,
 } from "@nestjs/common";
 import { CreateClientDto } from "../DTO/create-client.dto";
 import { ClientsDataClass } from "../Schemas/clients.schema";
 import { ClientsService } from "../Services/clients.service";
 import { AuthGuard } from "../Services/auth.guard";
+import { HttpService } from "@nestjs/axios";
+import { firstValueFrom } from "rxjs";
 
 @Controller("clients")
 export class ClientsController {
-  constructor(private readonly ClientsService: ClientsService) {}
+  constructor(
+    private readonly ClientsService: ClientsService,
+    private readonly httpService: HttpService
+  ) {}
 
-  @Post('public')
+  @Get("send")
+  async sendEmail(@Request() req: any): Promise<any> {
+    try {
+      const data = await firstValueFrom(
+        this.httpService.get(
+          "https://realemail.expeditedaddons.com/?api_key=" +
+            process.env.REALEMAIL_API_KEY +
+            "&email=voloshynajelena@gmail.com&fix_typos=false",
+        )
+      );
+      console.log({ data });
+    } catch (error) {
+      console.log(error);
+    }
+    return {"response": "ok"}
+  }
+
+  @Post("public")
   async publicCreate(@Body() CreateClientsDto: CreateClientDto[]) {
     return this.ClientsService.publicCreate(CreateClientsDto);
   }
@@ -36,7 +58,10 @@ export class ClientsController {
   }
   @UseGuards(AuthGuard)
   @Patch()
-  async updateValue(@Body() CreateClientsDto: CreateClientDto, @Request() req: any) {
+  async updateValue(
+    @Body() CreateClientsDto: CreateClientDto,
+    @Request() req: any
+  ) {
     return this.ClientsService.updateValue(CreateClientsDto, req.user);
   }
 

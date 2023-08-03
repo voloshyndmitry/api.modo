@@ -31,7 +31,7 @@ export class ClientsController {
         this.httpService.get(
           "https://realemail.expeditedaddons.com/?api_key=" +
             process.env.REALEMAIL_API_KEY +
-            "&email=voloshynajelena@gmail.com&fix_typos=false",
+            "&email=woloshindima+test-email@gmail.com&fix_typos=false",
         )
       );
       console.log({ data });

@@ -41,13 +41,14 @@ export class AnalyticsController {
   async init(@Request() req: any) {
     const clientIp = requestIp.getClientIp(req);
     const token = this.extractTokenFromHeader(req as CustomRequest);
+    console.log({ token });
     const user = await this.getUserFromToken(token);
     const parser = new UAParser(req.get("user-agent")); // you need to pass the user-agent for nodejs
     const location = geoip.lookup(clientIp);
     const parserResults = parser.getResult();
     const analytics = { ...parserResults, location, ip: clientIp };
     console.log(analytics);
-    console.log({user});
+    console.log({ user });
 
     return this.AnalyticsService.create(analytics, user);
   }
@@ -57,10 +58,12 @@ export class AnalyticsController {
       const payload = await this.jwtService.verifyAsync(token, {
         secret: jwtConstants.secret,
       });
+      console.log({ payload });
       // 💡 We're assigning the payload to the request object here
       // so that we can access it in our route handlers
       return payload;
-    } catch {
+    } catch (error) {
+      console.log({ error });
       return { sub: "1" };
     }
   }

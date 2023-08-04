@@ -62,7 +62,8 @@ export class ClientsService {
               isApproved,
               relatives: [...reversRelativesChild, ...reversRelativesSpouse],
               created,
-              updated: created
+              updated: created,
+              isVisible: true,
             });
 
             createdRelativeClient.save();
@@ -81,7 +82,6 @@ export class ClientsService {
           }))
           .filter(({ id }) => id !== userIds[index]);
 
-        
         const createdClient = new this.clientsModel({
           ...client,
           id: userIds[index],
@@ -90,6 +90,7 @@ export class ClientsService {
           relatives: [...siblings, ...newRelatives],
           created,
           updated: created,
+          isVisible: true,
         });
 
         /**
@@ -130,12 +131,16 @@ export class ClientsService {
       isApproved: true,
       created,
       updated: created,
+      isVisible: true,
     });
 
     return createdClient.save();
   }
 
-  async update(createClientDto: CreateClientDto, user): Promise<ClientsDataClass> {
+  async update(
+    createClientDto: CreateClientDto,
+    user
+  ): Promise<ClientsDataClass> {
     const updated = {
       date: new Date().getTime(),
       userId: user.sub,
@@ -177,10 +182,12 @@ export class ClientsService {
       .find({ groupId: currentUser.groupId })
       .exec();
 
-    return clients.map((client) => {
-      const { _id, ...clientData } = client.toObject();
-      return clientData;
-    });
+    return clients
+      .filter(({ isVisible }) => !isVisible)
+      .map((client) => {
+        const { _id, ...clientData } = client.toObject();
+        return clientData;
+      });
   }
 
   async findOne(id: string): Promise<ClientsDataClass> {
@@ -188,7 +195,9 @@ export class ClientsService {
   }
 
   async delete(id: string) {
-    const deletedCat = await this.clientsModel.findOneAndRemove({ id }).exec();
+    const deletedCat = await this.clientsModel
+      .findOneAndUpdate({ id }, { isVisible: false })
+      .exec();
     return deletedCat;
   }
 }

@@ -4,6 +4,8 @@ import { UsersModule } from './users.module';
 import { MembershipsController } from '../Controllers/memberships.controller';
 import { MembershipDataClass, MembershipSchema } from '../Schemas/membership.schema';
 import { MembershipsService } from '../Services/membership.service';
+import { LogDataClass, LogSchema } from '../Schemas/log.schema';
+import { LogsService } from '../Services/logs.service';
 
 
 @Module({
@@ -12,8 +14,11 @@ import { MembershipsService } from '../Services/membership.service';
     MongooseModule.forFeature([
       { name: MembershipDataClass.name, schema: MembershipSchema },
     ]),
+    MongooseModule.forFeature([
+      { name: LogDataClass.name, schema: LogSchema },
+    ]),
   ],
   controllers: [MembershipsController],
-  providers: [MembershipsService],
+  providers: [MembershipsService, LogsService],
 })
 export class MembershipsModule {}

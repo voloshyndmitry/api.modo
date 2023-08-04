@@ -4,6 +4,7 @@ export class CreateClientDto {
   readonly id: string;
   readonly groupId: string;
   readonly email: string;
+  readonly isVisible: boolean;
   readonly pass?: string;
   readonly photo?: string;
   readonly name: string;

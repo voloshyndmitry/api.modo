@@ -8,39 +8,56 @@ import {
   Query,
   Put,
   UseGuards,
-  Request
+  Request,
 } from "@nestjs/common";
 
 import { AuthGuard } from "../Services/auth.guard";
 import { CreateEventDto } from "../DTO/create-event.dto";
 import { EventsService } from "../Services/events.service";
 import { EventDataClass } from "../Schemas/event.schema";
+import { LogsService } from "../Services/logs.service";
+import { CustomRequest } from "../Common/common.interfaces";
 
 @Controller("events")
 export class EventsController {
-  constructor(private readonly EventsService: EventsService) {}
+  constructor(
+    private readonly EventsService: EventsService,
+    private readonly logsService: LogsService
+  ) {}
 
   @UseGuards(AuthGuard)
   @Post()
-  async create(@Body() CreateEventsDto: CreateEventDto, @Request() req: any) {
+  async create(
+    @Body() CreateEventsDto: CreateEventDto,
+    @Request() req: CustomRequest
+  ) {
+    this.logsService.log(req);
     return this.EventsService.create(CreateEventsDto, req.user);
   }
 
   @UseGuards(AuthGuard)
   @Put()
-  async update(@Body() CreateEventsDto: CreateEventDto, @Request() req: any) {
+  async update(
+    @Body() CreateEventsDto: CreateEventDto,
+    @Request() req: CustomRequest
+  ) {
+    this.logsService.log(req);
     return this.EventsService.update(CreateEventsDto, req.user);
   }
 
   @UseGuards(AuthGuard)
   @Patch()
-  async updateValue(@Body() CreateEventsDto: CreateEventDto, @Request() req: any) {
+  async updateValue(
+    @Body() CreateEventsDto: CreateEventDto,
+    @Request() req: CustomRequest
+  ) {
+    this.logsService.log(req);
     return this.EventsService.updateValue(CreateEventsDto, req.user);
   }
 
   @UseGuards(AuthGuard)
   @Get()
-  async findAll(@Request() req: any): Promise<EventDataClass[]> {
+  async findAll(@Request() req: CustomRequest): Promise<EventDataClass[]> {
     return this.EventsService.findAll(req.user);
   }
 
@@ -52,7 +69,8 @@ export class EventsController {
 
   @UseGuards(AuthGuard)
   @Delete()
-  async delete(@Query("id") id: string) {
+  async delete(@Query("id") id: string, @Request() req: CustomRequest) {
+    this.logsService.log(req);
     return this.EventsService.delete(id);
   }
 }

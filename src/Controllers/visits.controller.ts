@@ -8,39 +8,56 @@ import {
   Query,
   Put,
   UseGuards,
-  Request
+  Request,
 } from "@nestjs/common";
 
 import { AuthGuard } from "../Services/auth.guard";
 import { CreateVisitDto } from "../DTO/create-visit.dto";
 import { VisitDataClass } from "../Schemas/visits.schema";
 import { VisitsService } from "../Services/visits.service";
+import { CustomRequest } from "../Common/common.interfaces";
+import { LogsService } from "../Services/logs.service";
 
 @Controller("visits")
 export class VisitsController {
-  constructor(private readonly VisitsService: VisitsService) {}
+  constructor(
+    private readonly VisitsService: VisitsService,
+    private readonly logsService: LogsService
+  ) {}
 
   @UseGuards(AuthGuard)
   @Post()
-  async create(@Body() CreateVisitsDto: CreateVisitDto, @Request() req: any) {
+  async create(
+    @Body() CreateVisitsDto: CreateVisitDto,
+    @Request() req: CustomRequest
+  ) {
+    this.logsService.log(req);
     return this.VisitsService.create(CreateVisitsDto, req.user);
   }
 
   @UseGuards(AuthGuard)
   @Put()
-  async update(@Body() CreateVisitsDto: CreateVisitDto, @Request() req: any) {
+  async update(
+    @Body() CreateVisitsDto: CreateVisitDto,
+    @Request() req: CustomRequest
+  ) {
+    this.logsService.log(req);
     return this.VisitsService.update(CreateVisitsDto, req.user);
   }
 
   @UseGuards(AuthGuard)
   @Patch()
-  async updateValue(@Body() CreateVisitsDto: CreateVisitDto, @Request() req: any) {
+  async updateValue(
+    @Body() CreateVisitsDto: CreateVisitDto,
+    @Request() req: CustomRequest
+  ) {
+    this.logsService.log(req);
     return this.VisitsService.updateValue(CreateVisitsDto, req.user);
   }
 
   @UseGuards(AuthGuard)
   @Get()
-  async findAll(@Request() req: any): Promise<VisitDataClass[]> {
+  async findAll(@Request() req: CustomRequest): Promise<VisitDataClass[]> {
     return this.VisitsService.findAll(req.user);
   }
 
@@ -52,7 +69,8 @@ export class VisitsController {
 
   @UseGuards(AuthGuard)
   @Delete()
-  async delete(@Query("id") id: string) {
+  async delete(@Query("id") id: string, @Request() req: CustomRequest) {
+    this.logsService.log(req);
     return this.VisitsService.delete(id);
   }
 }

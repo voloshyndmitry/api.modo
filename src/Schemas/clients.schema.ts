@@ -35,6 +35,9 @@ export class ClientsDataClass {
   @Prop({ required: true, type: String })
   groupId: string;
 
+  @Prop({ required: true, type: Boolean })
+  isVisible: boolean;
+
   @Prop({ type: String })
   email: string;
 

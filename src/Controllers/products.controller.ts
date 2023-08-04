@@ -15,17 +15,23 @@ import { AuthGuard } from "../Services/auth.guard";
 import { CreateProductDto } from "../DTO/create-product.dto";
 import { ProductDataClass } from "../Schemas/product.schema";
 import { ProductsService } from "../Services/products.service";
+import { CustomRequest } from "../Common/common.interfaces";
+import { LogsService } from "../Services/logs.service";
 
 @Controller("products")
 export class ProductsController {
-  constructor(private readonly ProductsService: ProductsService) {}
+  constructor(
+    private readonly ProductsService: ProductsService,
+    private readonly logsService: LogsService
+  ) {}
 
   @UseGuards(AuthGuard)
   @Post()
   async create(
     @Body() CreateProductsDto: CreateProductDto,
-    @Request() req: any
+    @Request() req: CustomRequest
   ) {
+    this.logsService.log(req);
     return this.ProductsService.create(CreateProductsDto, req.user);
   }
 
@@ -33,8 +39,9 @@ export class ProductsController {
   @Put()
   async update(
     @Body() CreateProductsDto: CreateProductDto,
-    @Request() req: any
+    @Request() req: CustomRequest
   ) {
+    this.logsService.log(req);
     return this.ProductsService.update(CreateProductsDto, req.user);
   }
 
@@ -42,14 +49,15 @@ export class ProductsController {
   @Patch()
   async updateValue(
     @Body() CreateProductsDto: CreateProductDto,
-    @Request() req: any
+    @Request() req: CustomRequest
   ) {
+    this.logsService.log(req);
     return this.ProductsService.updateValue(CreateProductsDto, req.user);
   }
 
   @UseGuards(AuthGuard)
   @Get()
-  async findAll(@Request() req: any): Promise<ProductDataClass[]> {
+  async findAll(@Request() req: CustomRequest): Promise<ProductDataClass[]> {
     return this.ProductsService.findAll(req.user);
   }
 
@@ -61,7 +69,8 @@ export class ProductsController {
 
   @UseGuards(AuthGuard)
   @Delete()
-  async delete(@Query("id") id: string) {
+  async delete(@Query("id") id: string, @Request() req: CustomRequest) {
+    this.logsService.log(req);
     return this.ProductsService.delete(id);
   }
 }

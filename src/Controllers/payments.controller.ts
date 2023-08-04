@@ -8,39 +8,59 @@ import {
   Query,
   Put,
   UseGuards,
-  Request
+  Request,
 } from "@nestjs/common";
 
 import { AuthGuard } from "../Services/auth.guard";
 import { CreatePaymentDto } from "../DTO/create-payment.dto";
 import { PaymentDataClass } from "../Schemas/payment.schema";
-import {PaymentsService} from "../Services/payments.service";
+import { PaymentsService } from "../Services/payments.service";
+import { CustomRequest } from "../Common/common.interfaces";
+import { LogsService } from "../Services/logs.service";
 
 @Controller("payments")
 export class PaymentsController {
-  constructor(private readonly PaymentsService: PaymentsService) {}
+  constructor(
+    private readonly PaymentsService: PaymentsService,
+    private readonly logsService: LogsService
+  ) {}
 
   @UseGuards(AuthGuard)
   @Post()
-  async create(@Body() CreatePaymentsDto: CreatePaymentDto, @Request() req: any) {
+  async create(
+    @Body() CreatePaymentsDto: CreatePaymentDto,
+    @Request() req: CustomRequest
+  ) {
+    this.logsService.log(req);
+
     return this.PaymentsService.create(CreatePaymentsDto, req.user);
   }
 
   @UseGuards(AuthGuard)
   @Put()
-  async update(@Body() CreatePaymentsDto: CreatePaymentDto, @Request() req: any) {
+  async update(
+    @Body() CreatePaymentsDto: CreatePaymentDto,
+    @Request() req: CustomRequest
+  ) {
+    this.logsService.log(req);
+
     return this.PaymentsService.update(CreatePaymentsDto, req.user);
   }
 
   @UseGuards(AuthGuard)
   @Patch()
-  async updateValue(@Body() CreatePaymentsDto: CreatePaymentDto, @Request() req: any) {
+  async updateValue(
+    @Body() CreatePaymentsDto: CreatePaymentDto,
+    @Request() req: CustomRequest
+  ) {
+    this.logsService.log(req);
+
     return this.PaymentsService.updateValue(CreatePaymentsDto, req.user);
   }
 
   @UseGuards(AuthGuard)
   @Get()
-  async findAll(@Request() req: any): Promise<PaymentDataClass[]> {
+  async findAll(@Request() req: CustomRequest): Promise<PaymentDataClass[]> {
     return this.PaymentsService.findAll(req.user);
   }
 
@@ -52,7 +72,9 @@ export class PaymentsController {
 
   @UseGuards(AuthGuard)
   @Delete()
-  async delete(@Query("id") id: string) {
+  async delete(@Query("id") id: string, @Request() req: CustomRequest) {
+    this.logsService.log(req);
+
     return this.PaymentsService.delete(id);
   }
 }

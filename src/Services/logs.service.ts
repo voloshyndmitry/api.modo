@@ -4,6 +4,7 @@ import { InjectModel } from "@nestjs/mongoose";
 import { UsersService } from "./users.service";
 import { CreateLogDto } from "../DTO/create-log.dto";
 import { LogDataClass } from "../Schemas/log.schema";
+import { CustomRequest } from "../Common/common.interfaces";
 
 const hyperid = require("hyperid");
 const generateId = hyperid({ urlSafe: true });
@@ -15,11 +16,11 @@ export class LogsService {
     private usersService: UsersService
   ) {}
 
-  async log(req: Request, user?: { sub: string }): Promise<LogDataClass> {
+  async log(req: CustomRequest): Promise<LogDataClass> {
     const id = `log${generateId()}`;
     const created = {
       date: new Date().getTime(),
-      userId: user?.sub || "unauthorized",
+      userId: req?.user?.sub || "unauthorized",
     };
     const createdLog = new this.LogsModel({
       url: req.url,

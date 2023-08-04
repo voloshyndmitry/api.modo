@@ -15,6 +15,7 @@ import { ClientsDataClass } from "../Schemas/clients.schema";
 import { ClientsService } from "../Services/clients.service";
 import { AuthGuard } from "../Services/auth.guard";
 import { LogsService } from "../Services/logs.service";
+import { CustomRequest } from "../Common/common.interfaces";
 
 @Controller("clients")
 export class ClientsController {
@@ -26,35 +27,39 @@ export class ClientsController {
   @Post("public")
   async publicCreate(
     @Body() CreateClientsDto: CreateClientDto[],
-    @Request() req: Request
+    @Request() req: CustomRequest
   ) {
     this.logsService.log(req);
     return this.ClientsService.publicCreate(CreateClientsDto);
   }
   @UseGuards(AuthGuard)
   @Post()
-  async create(@Body() CreateClientsDto: CreateClientDto, @Request() req: any) {
+  async create(@Body() CreateClientsDto: CreateClientDto, @Request() req: CustomRequest) {
+    this.logsService.log(req);
+
     return this.ClientsService.create(CreateClientsDto, req.user);
   }
 
   @UseGuards(AuthGuard)
   @Put()
-  async update(@Body() CreateClientsDto: CreateClientDto, @Request() req: any) {
+  async update(@Body() CreateClientsDto: CreateClientDto, @Request() req: CustomRequest) {
+    this.logsService.log(req);
+
     return this.ClientsService.update(CreateClientsDto, req.user);
   }
   @UseGuards(AuthGuard)
   @Patch()
   async updateValue(
     @Body() CreateClientsDto: CreateClientDto,
-    @Request() req: any
+    @Request() req: CustomRequest
   ) {
+    this.logsService.log(req);
     return this.ClientsService.updateValue(CreateClientsDto, req.user);
   }
 
   @UseGuards(AuthGuard)
   @Get()
-  async findAll(@Request() req: any): Promise<ClientsDataClass[]> {
-    this.logsService.log(req, req.user);
+  async findAll(@Request() req: CustomRequest): Promise<ClientsDataClass[]> {
     return this.ClientsService.findAll(req.user);
   }
 
@@ -66,7 +71,9 @@ export class ClientsController {
 
   @UseGuards(AuthGuard)
   @Delete()
-  async delete(@Query("id") id: string) {
+  async delete(@Query("id") id: string, req: CustomRequest) {
+    this.logsService.log(req);
+
     return this.ClientsService.delete(id);
   }
 }

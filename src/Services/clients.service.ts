@@ -183,7 +183,7 @@ export class ClientsService {
       .exec();
 
     return clients
-      .filter(({ isVisible }) => !isVisible)
+      .filter(({ isVisible = true }) => isVisible)
       .map((client) => {
         const { _id, ...clientData } = client.toObject();
         return clientData;

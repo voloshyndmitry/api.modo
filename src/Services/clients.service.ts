@@ -166,11 +166,10 @@ export class ClientsService {
       userId: user.sub,
     };
     const { id, ...updateData } = createClientDto;
-    const client = await this.findOne(id);
 
     const resp = await this.clientsModel.findOneAndUpdate(
       { id },
-      { ...client, ...updateData, updated }
+      { ...updateData, updated }
     );
 
     return resp;

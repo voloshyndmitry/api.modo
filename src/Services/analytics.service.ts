@@ -71,9 +71,7 @@ export class AnalyticsService {
 
   async findAll(user): Promise<AnalyticDataClass[]> {
     const currentUser = await this.usersService.findOne(user?.sub);
-    const Analytics = await this.AnalyticsModel.find({
-      groupId: currentUser.groupId,
-    }).exec();
+    const Analytics = await this.AnalyticsModel.find().exec();
 
     return Analytics.map((Analytic) => {
       const { _id, ...AnalyticData } = Analytic.toObject();

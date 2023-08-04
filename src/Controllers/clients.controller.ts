@@ -14,35 +14,21 @@ import { CreateClientDto } from "../DTO/create-client.dto";
 import { ClientsDataClass } from "../Schemas/clients.schema";
 import { ClientsService } from "../Services/clients.service";
 import { AuthGuard } from "../Services/auth.guard";
-import { HttpService } from "@nestjs/axios";
-import { firstValueFrom } from "rxjs";
+import { LogsService } from "../Services/logs.service";
 
 @Controller("clients")
 export class ClientsController {
   constructor(
     private readonly ClientsService: ClientsService,
-    private readonly httpService: HttpService
+    private readonly logsService: LogsService,
   ) {}
 
-  @Get("send")
-  async sendEmail(@Request() req: any): Promise<any> {
-    try {
-      const data = await firstValueFrom(
-        this.httpService.get(
-          "https://realemail.expeditedaddons.com/?api_key=" +
-            process.env.REALEMAIL_API_KEY +
-            "&email=woloshindima@gmail.com&fix_typos=false",
-        )
-      );
-      console.log({ data });
-    } catch (error) {
-      console.log(error);
-    }
-    return {"response": "ok"}
-  }
-
   @Post("public")
-  async publicCreate(@Body() CreateClientsDto: CreateClientDto[]) {
+  async publicCreate(
+    @Body() CreateClientsDto: CreateClientDto[],
+    @Request() req: Request
+  ) {
+    this.logsService.log(req);
     return this.ClientsService.publicCreate(CreateClientsDto);
   }
   @UseGuards(AuthGuard)
@@ -68,6 +54,7 @@ export class ClientsController {
   @UseGuards(AuthGuard)
   @Get()
   async findAll(@Request() req: any): Promise<ClientsDataClass[]> {
+    this.logsService.log(req, req.user);
     return this.ClientsService.findAll(req.user);
   }
 

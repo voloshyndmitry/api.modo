@@ -5,6 +5,8 @@ import { ClientSchema, ClientsDataClass } from "../Schemas/clients.schema";
 import { ClientsService } from "../Services/clients.service";
 import { UsersModule } from "./users.module";
 import { HttpModule } from "@nestjs/axios";
+import { LogsService } from "../Services/logs.service";
+import { LogDataClass, LogSchema } from "../Schemas/log.schema";
 
 @Module({
   imports: [
@@ -12,9 +14,12 @@ import { HttpModule } from "@nestjs/axios";
     MongooseModule.forFeature([
       { name: ClientsDataClass.name, schema: ClientSchema },
     ]),
+    MongooseModule.forFeature([
+      { name: LogDataClass.name, schema: LogSchema },
+    ]),
     HttpModule
   ],
   controllers: [ClientsController],
-  providers: [ClientsService],
+  providers: [ClientsService, LogsService],
 })
 export class ClientsModule {}

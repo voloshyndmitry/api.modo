@@ -64,8 +64,22 @@ export class PaymentsService {
 
   async findAll(user): Promise<PaymentDataClass[]> {
     const currentUser = await this.usersService.findOne(user?.sub);
+
     const Payments = await this.PaymentsModel.find({
       groupId: currentUser.groupId,
+    }).exec();
+
+    return Payments.map((Payment) => {
+      const { _id, ...PaymentData } = Payment.toObject();
+      return PaymentData;
+    });
+  }
+
+  async findAllByClientId(user, clientId): Promise<PaymentDataClass[]> {
+    const currentUser = await this.usersService.findOne(user?.sub);
+    const Payments = await this.PaymentsModel.find({
+      groupId: currentUser.groupId,
+      clientId
     }).exec();
 
     return Payments.map((Payment) => {

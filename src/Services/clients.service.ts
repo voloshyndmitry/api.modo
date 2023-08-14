@@ -4,16 +4,21 @@ import { InjectModel } from "@nestjs/mongoose";
 import { CreateClientDto } from "../DTO/create-client.dto";
 import { ClientsDataClass } from "../Schemas/clients.schema";
 import { UsersService } from "./users.service";
+import { PaymentsService } from "./payments.service";
+import { PAYMENT_STATUS } from "src/Common/common.interfaces";
 
 const hyperid = require("hyperid");
 const generateId = hyperid({ urlSafe: true });
 
 @Injectable()
 export class ClientsService {
+  payments;
+
   constructor(
     @InjectModel(ClientsDataClass.name)
     private clientsModel: Model<ClientsDataClass>,
-    private usersService: UsersService
+    private usersService: UsersService,
+    private paymentsService: PaymentsService
   ) {}
 
   async publicCreate(clients: CreateClientDto[]): Promise<string> {
@@ -175,17 +180,38 @@ export class ClientsService {
     return resp;
   }
 
+  private getStatus(clientId: string): string {
+    const lastPaymentByClientId = this.payments.findLast(
+      (payment) =>
+        payment.clientId === clientId && payment.title === "Membership"
+    );
+    if (!lastPaymentByClientId) {
+      return PAYMENT_STATUS.PENDING;
+    }
+    const { date } = lastPaymentByClientId;
+    const currentDate = new Date().getTime();
+
+    return date > currentDate
+      ? PAYMENT_STATUS.ACTIVE
+      : PAYMENT_STATUS.PENDING;
+  }
+
   async findAll(user): Promise<ClientsDataClass[]> {
     const currentUser = await this.usersService.findOne(user.sub);
+
     const clients = await this.clientsModel
       .find({ groupId: currentUser.groupId })
       .exec();
+    this.payments = await this.paymentsService.findAll(user);
 
     return clients
       .filter(({ isVisible = true }) => isVisible)
       .map((client) => {
         const { _id, ...clientData } = client.toObject();
-        return clientData;
+        return {
+          ...clientData,
+          status: this.getStatus(client.id),
+        };
       });
   }
 

@@ -181,18 +181,19 @@ export class ClientsService {
   }
 
   private getStatus(clientId: string): string {
-    const lastPaymentByClientId = this.payments.findLast(
+    const lastPaymentByClientId = this.payments.sort((next, prev) => next.date - prev.date).find(
       (payment) =>
-        payment.clientId === clientId && payment.title === "Membership"
+        payment.clientId === clientId && payment.title.toLowerCase() === "membership"
     );
     if (!lastPaymentByClientId) {
       return PAYMENT_STATUS.PENDING;
     }
-    const { date } = lastPaymentByClientId;
+    
+    const date = Number(lastPaymentByClientId.date);
     const expireDate = new Date(date).setMonth(new Date(date).getMonth() + 1)
     const currentDate = new Date().getTime();
 
-    return expireDate < currentDate
+    return expireDate > currentDate
       ? PAYMENT_STATUS.ACTIVE
       : PAYMENT_STATUS.PENDING;
   }

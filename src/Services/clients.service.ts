@@ -189,9 +189,10 @@ export class ClientsService {
       return PAYMENT_STATUS.PENDING;
     }
     const { date } = lastPaymentByClientId;
+    const expireDate = new Date(date).setMonth(new Date(date).getMonth() + 1)
     const currentDate = new Date().getTime();
 
-    return date > currentDate
+    return expireDate < currentDate
       ? PAYMENT_STATUS.ACTIVE
       : PAYMENT_STATUS.PENDING;
   }

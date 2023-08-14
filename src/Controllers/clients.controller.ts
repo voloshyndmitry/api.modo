@@ -57,10 +57,10 @@ export class ClientsController {
     return this.ClientsService.updateValue(CreateClientsDto, req.user);
   }
 
-  // @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard)
   @Get()
   async findAll(@Request() req: CustomRequest): Promise<ClientsDataClass[]> {
-    return this.ClientsService.findAll(req.user || { sub: 1});
+    return this.ClientsService.findAll(req.user);
   }
 
   @UseGuards(AuthGuard)

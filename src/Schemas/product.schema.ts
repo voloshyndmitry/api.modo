@@ -27,7 +27,7 @@ export class ProductDataClass {
   @Prop({ required: true, type: String })
   value: string;
 
-  @Prop({ required: true, type: String })
+  @Prop({ type: String })
   label: string;
 
   @Prop({ required: true, type: String })

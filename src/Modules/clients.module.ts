@@ -9,6 +9,7 @@ import { LogsService } from "../Services/logs.service";
 import { LogDataClass, LogSchema } from "../Schemas/log.schema";
 import { PaymentsService } from "src/Services/payments.service";
 import { PaymentDataClass, PaymentSchema } from "src/Schemas/payment.schema";
+import { MailService } from "src/Services/mail.service";
 
 @Module({
   imports: [
@@ -25,6 +26,6 @@ import { PaymentDataClass, PaymentSchema } from "src/Schemas/payment.schema";
     HttpModule
   ],
   controllers: [ClientsController],
-  providers: [ClientsService, LogsService, PaymentsService],
+  providers: [ClientsService, LogsService, PaymentsService, MailService],
 })
 export class ClientsModule {}

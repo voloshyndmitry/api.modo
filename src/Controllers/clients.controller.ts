@@ -16,12 +16,14 @@ import { ClientsService } from "../Services/clients.service";
 import { AuthGuard } from "../Services/auth.guard";
 import { LogsService } from "../Services/logs.service";
 import { CustomRequest } from "../Common/common.interfaces";
+import { MailService } from "src/Services/mail.service";
 
 @Controller("clients")
 export class ClientsController {
   constructor(
     private readonly ClientsService: ClientsService,
     private readonly logsService: LogsService,
+    private readonly mailService: MailService,
   ) {}
 
   @Post("public")
@@ -29,6 +31,7 @@ export class ClientsController {
     @Body() CreateClientsDto: CreateClientDto[],
     @Request() req: CustomRequest
   ) {
+    CreateClientsDto.forEach(newUser => this.mailService.sendUserConfirmation(newUser))
     this.logsService.log(req);
     return this.ClientsService.publicCreate(CreateClientsDto);
   }

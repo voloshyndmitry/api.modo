@@ -37,17 +37,22 @@ export class MailService {
         Address: ${data.address.streetAddress1}, ${data.address.streetAddress2}, ${data.address.postalCode}, ${data.address.province}, ${data.address.city}, ${data.address.country}
         Payment Option: ${data.paymentOption}
         Medical Behavioral Info: ${data.medicalBehavioralInfo}
-        Price: $${data.price}
+        Price: $${data.price}`;
 
-        Thank you for your registration!`;
+        
 
     if (data.memberships){
       text += `\nMemberships: ${data.memberships.join(", ")}`;
     }
 
+    text += `Thank you for your registration!
+    
+    Best regards,
+    Champion Sport Club`;
+
     const mailOptions = {
       to: data.email,
-      subject: "Registration successful",
+      subject: "CHAMPION CLUB: Registration successful!",
       text,
     };
     return mailOptions;

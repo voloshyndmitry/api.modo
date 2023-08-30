@@ -28,27 +28,35 @@ interface MailOptions {
 @Injectable()
 export class MailService {
   private getEmailOptionsFromUser(data: CreateClientDto): MailOptions {
+    const dateObj = new Date(data.dob);
+    const month = dateObj.getUTCMonth() + 1; //months from 1-12
+    const day = dateObj.getUTCDate();
+    const year = dateObj.getUTCFullYear();
+
+    const dob = year + "/" + month + "/" + day;
+
     let text = `Congratulations ${data.name} ${data.surname}!
         You have successfully registered.
         Email: ${data.email}
-        Date of Birth: ${data.dob}
+        Date of Birth: ${dob}
         Gender: ${data.gender}
         Phone: ${data.phone}
         Address: ${data.address.streetAddress1}, ${data.address.streetAddress2}, ${data.address.postalCode}, ${data.address.province}, ${data.address.city}, ${data.address.country}
         Payment Option: ${data.paymentOption}
         Medical Behavioral Info: ${data.medicalBehavioralInfo}
-        Price: $${data.price}`;
+        Price: $${data.price}
+        `;
 
-        
-
-    if (data.memberships){
-      text += `\nMemberships: ${data.memberships.join(", ")}`;
+    if (data.memberships) {
+      text += `\nMemberships: ${data.memberships.join(", ")}
+      `;
     }
 
-    text += `Thank you for your registration!
+    text += `\nThank you for your registration!
     
     Best regards,
-    Champion Sport Club`;
+    Champion Sport Club
+    `;
 
     const mailOptions = {
       to: data.email,

@@ -39,6 +39,18 @@ export class ProductDataClass {
   @Prop({ type: String })
   currency: string;
 
+  @Prop({ type: String })
+  brand?: string;
+
+  @Prop({ type: String })
+  color: {
+    label: string;
+    value: string;
+  };
+
+  @Prop({ type: String })
+  salePrice: number
+
   @Prop({ type: OfferSchema })
   specialOffers: Offer;
 

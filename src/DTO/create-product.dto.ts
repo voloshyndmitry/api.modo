@@ -8,6 +8,12 @@ export class CreateProductDto {
   readonly currency: string;
   readonly groupId: string;
   readonly specialOffers: Offer;
+  readonly brand?: string;
+  readonly color?: {
+    label: string;
+    value: string;
+  };
+  readonly salePrice?: number
   readonly created: MetaData;
   readonly updated: MetaData;
 }

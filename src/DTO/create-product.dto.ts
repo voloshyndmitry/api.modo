@@ -14,6 +14,7 @@ export class CreateProductDto {
     value: string;
   };
   readonly salePrice?: number
+  readonly size?: number
   readonly created: MetaData;
   readonly updated: MetaData;
 }

@@ -52,10 +52,13 @@ export class ProductDataClass {
   @Prop({ type: String })
   brand?: string;
 
+  @Prop({ type: String })
+  size?: string;
+
   @Prop({ type: ColorSchema })
   color: Color;
 
-  @Prop({ type: String })
+  @Prop({ type: Number })
   salePrice: number
 
   @Prop({ type: OfferSchema })

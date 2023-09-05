@@ -64,7 +64,7 @@ export class ClientsService {
               ...relativeClient,
               id: relativeIds[relIndex],
               groupId,
-              isApproved,
+              isApproved: true,
               relatives: [...reversRelativesChild, ...reversRelativesSpouse],
               created,
               updated: created,

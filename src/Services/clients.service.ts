@@ -19,7 +19,7 @@ export class ClientsService {
     private clientsModel: Model<ClientsDataClass>,
     private usersService: UsersService,
     private paymentsService: PaymentsService
-  ) {}
+  ) { }
 
   async publicCreate(clients: CreateClientDto[]): Promise<string> {
     const groupId = "2";
@@ -181,14 +181,14 @@ export class ClientsService {
   }
 
   private getStatus(clientId: string): string {
-    const lastPaymentByClientId = this.payments.sort((next, prev) => next.date - prev.date).find(
+    const lastPaymentByClientId = this.payments.sort((next, prev) => Number(next.date) - Number(prev.date)).find(
       (payment) =>
         payment.clientId === clientId && payment.title.toLowerCase() === "membership"
     );
     if (!lastPaymentByClientId) {
       return PAYMENT_STATUS.PENDING;
     }
-    
+
     const date = Number(lastPaymentByClientId.date);
     const expireDate = new Date(date).setMonth(new Date(date).getMonth() + 1)
     const currentDate = new Date().getTime();

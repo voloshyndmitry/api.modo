@@ -181,7 +181,7 @@ export class ClientsService {
   }
 
   private getStatus(clientId: string): string {
-    const lastPaymentByClientId = this.payments.sort((next, prev) => Number(next.date) - Number(prev.date)).find(
+    const lastPaymentByClientId = this.payments.sort((next, prev) => Number(prev.date) - Number(next.date)).find(
       (payment) =>
         payment.clientId === clientId && payment.title.toLowerCase() === "membership"
     );

@@ -56,6 +56,16 @@ export class MailService {
     
     Best regards,
     Champion Sport Club
+    ___________
+ 
+
+ 
+    www.champiomclub.ca
+    phone: (587) 838 0453
+    12686 48 St SE, Calgary, AB, T2Z 0B1
+     
+    Champion Karate is a business name used by The Champion Sport Club Inc.
+
     `;
 
     const mailOptions = {

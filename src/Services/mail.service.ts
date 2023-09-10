@@ -43,8 +43,9 @@ export class MailService {
         Phone: ${data.phone}
         Address: ${data.address.streetAddress1}, ${data.address.streetAddress2}, ${data.address.postalCode}, ${data.address.province}, ${data.address.city}, ${data.address.country}
         Payment Option: ${data.paymentOption}
+        to payment@championclub.ca
         Medical Behavioral Info: ${data.medicalBehavioralInfo}
-        Price: $${data.price}
+        Price: $${data.price} (Including 5% GST)
         `;
 
     if (data.memberships) {

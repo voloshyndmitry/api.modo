@@ -1,5 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { CreateClientDto } from "src/DTO/create-client.dto";
+import getConfirmationEmail from "./emailTemplates/confirmationEmail.template"
 const nodemailer = require("nodemailer");
 require("dotenv").config();
 
@@ -81,6 +82,7 @@ export class MailService {
     to: string;
     subject: string;
     text: string;
+    html?: string
   }): Promise<void> {
     try {
       const from = process.env.EMAIL_FROM;
@@ -95,6 +97,7 @@ export class MailService {
 
   async sendUserConfirmation(data: CreateClientDto) {
     const mailOptions = this.getEmailOptionsFromUser(data);
-    this.send(mailOptions);
+    const html = getConfirmationEmail(data)
+    this.send({ ...mailOptions, html });
   }
 }

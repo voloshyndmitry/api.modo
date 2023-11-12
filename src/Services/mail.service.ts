@@ -5,15 +5,12 @@ const nodemailer = require("nodemailer");
 require("dotenv").config();
 
 const mailTransport = nodemailer.createTransport({
+  service:"goDaddy",
   host: process.env.EMAIL_HOST,
   secure: true,
-  secureConnection: false, // TLS requires secureConnection to be false
-  tls: {
-    ciphers: "SSLv3",
-  },
+  secureConnection: true, // TLS requires secureConnection to be false
   requireTLS: true,
   port: process.env.EMAIL_PORT,
-  debug: true,
   auth: {
     user: process.env.EMAIL_FROM,
     pass: process.env.EMAIL_PASS,

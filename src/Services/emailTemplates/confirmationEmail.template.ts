@@ -413,13 +413,13 @@ ul.social li{
     <tr><td>Date of Birth:</td><td>${dob}</td></tr>
     <tr><td>Gender:</td><td>${data.gender}</td></tr>
     <tr><td>Phone:</td><td>${data.phone}</td></tr>
-    <tr><td>Address:</td><td>${data.address.streetAddress1}, ${data.address.streetAddress2}, ${data.address.postalCode}, ${data.address.province}, ${data.address.city}, ${data.address.country}</td></tr>
+    <tr><td>Address:</td><td>${data.address.streetAddress1}${data.address.streetAddress2 ? `, ${data.address.streetAddress2}` : ''}, ${data.address.postalCode}, ${data.address.province}, ${data.address.city}, ${data.address.country}</td></tr>
     <tr><td>Payment Option:</td><td>${data.paymentOption}</td></tr>
     <tr><td></td><td>to payment@championclub.ca</td></tr>
     <tr><td>Medical Behavioral Info:</td><td>${data.medicalBehavioralInfo}</td></tr>
     <tr><td>Price:</td><td>${data.price} (Including 5% GST)</td></tr>
 
-    ${data.memberships ? `<tr><td>nMemberships</td><td>${data.memberships.join(", ")}</td>` : ''}
+    ${data.memberships ? `<tr><td>Memberships</td><td>${data.memberships.join(", ")}</td>` : ''}
 </table>
 </tr>
 <tr><td><h4>Thank you for your registration!</h4></td></tr>

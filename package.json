@@ -4,6 +4,9 @@
   "version": "1.0.1",
   "description": "Nest TypeScript starter repository",
   "license": "MIT",
+  "engines": {
+    "node": "16.x"
+  },
   "scripts": {
     "logs": "heroku logs --tail -n 2000000 --app=api-modo",
     "build": "nest build",

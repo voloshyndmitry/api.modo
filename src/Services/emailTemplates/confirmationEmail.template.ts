@@ -1,7 +1,7 @@
 import { CreateClientDto } from "src/DTO/create-client.dto";
 
 export default function (data: CreateClientDto): string {
-  const dateObj = new Date(Number(data.dob));
+  const dateObj = new Date(data.dob);
   const month = dateObj.getUTCMonth() + 1; //months from 1-12
   const day = dateObj.getUTCDate();
   const year = dateObj.getUTCFullYear();

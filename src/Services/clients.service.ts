@@ -6,6 +6,7 @@ import { ClientsDataClass } from "../Schemas/clients.schema";
 import { UsersService } from "./users.service";
 import { PaymentsService } from "./payments.service";
 import { PAYMENT_STATUS } from "src/Common/common.interfaces";
+import { MailService } from "./mail.service";
 
 const hyperid = require("hyperid");
 const generateId = hyperid({ urlSafe: true });
@@ -18,8 +19,9 @@ export class ClientsService {
     @InjectModel(ClientsDataClass.name)
     private clientsModel: Model<ClientsDataClass>,
     private usersService: UsersService,
-    private paymentsService: PaymentsService
-  ) { }
+    private paymentsService: PaymentsService,
+    private readonly mailService: MailService
+  ) {}
 
   async publicCreate(clients: CreateClientDto[]): Promise<string> {
     const groupId = "2";
@@ -30,8 +32,8 @@ export class ClientsService {
     const userIds = Array.from({ length: clients.length }, () => generateId());
     let newRelatives;
     const created = {
-      date: new Date().getTime(),
-      userId: 0,
+      date: String(new Date().getTime()),
+      userId: "0",
     };
     try {
       /**
@@ -59,8 +61,8 @@ export class ClientsService {
                 relative: "spouse",
               }))
               .filter(({ id }) => id !== relativeIds[relIndex]);
-
-            const createdRelativeClient = new this.clientsModel({
+            
+            const formattedRelative = {
               ...relativeClient,
               id: relativeIds[relIndex],
               groupId,
@@ -69,7 +71,8 @@ export class ClientsService {
               created,
               updated: created,
               isVisible: true,
-            });
+            };
+            const createdRelativeClient = new this.clientsModel(formattedRelative);
 
             createdRelativeClient.save();
 
@@ -86,8 +89,7 @@ export class ClientsService {
             relative: "sibling",
           }))
           .filter(({ id }) => id !== userIds[index]);
-
-        const createdClient = new this.clientsModel({
+        const formattedClient = {
           ...client,
           id: userIds[index],
           groupId,
@@ -96,12 +98,14 @@ export class ClientsService {
           created,
           updated: created,
           isVisible: true,
-        });
+        };
+        const createdClient = new this.clientsModel(formattedClient);
 
         /**
          * return promise before go to the next iteration
          */
         await createdClient.save();
+        this.mailService.sendUserConfirmation(formattedClient);
       });
 
       /**
@@ -181,16 +185,19 @@ export class ClientsService {
   }
 
   private getStatus(clientId: string): string {
-    const lastPaymentByClientId = this.payments.sort((next, prev) => Number(prev.date) - Number(next.date)).find(
-      (payment) =>
-        payment.clientId === clientId && payment.title.toLowerCase() === "membership"
-    );
+    const lastPaymentByClientId = this.payments
+      .sort((next, prev) => Number(prev.date) - Number(next.date))
+      .find(
+        (payment) =>
+          payment.clientId === clientId &&
+          payment.title.toLowerCase() === "membership"
+      );
     if (!lastPaymentByClientId) {
       return PAYMENT_STATUS.PENDING;
     }
 
     const date = Number(lastPaymentByClientId.date);
-    const expireDate = new Date(date).setMonth(new Date(date).getMonth() + 1)
+    const expireDate = new Date(date).setMonth(new Date(date).getMonth() + 1);
     const currentDate = new Date().getTime();
 
     return expireDate > currentDate

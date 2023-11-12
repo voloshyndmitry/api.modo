@@ -402,8 +402,8 @@ ul.social li{
 <tbody><tr>
 <td>
 <div class="text" style="padding: 0 2.5em; text-align: center;">
-<h2>Congratulations ${data.name} ${data.surname}</h2>
-<h3>You have successfully registered.</h3>
+<h2>Congratulations</h2>
+<h3>${data.name} ${data.surname} has successfully registered.</h3>
 </div>
 </td>
 </tr>

@@ -31,6 +31,7 @@ export class ClientsService {
      */
     const userIds = Array.from({ length: clients.length }, () => generateId());
     let newRelatives;
+    let address;
     const created = {
       date: String(new Date().getTime()),
       userId: "0",
@@ -48,7 +49,7 @@ export class ClientsService {
             { length: client.relatives.length },
             () => generateId()
           );
-
+          address = client.address
           newRelatives = client.relatives.map((relativeClient, relIndex) => {
             const reversRelativesChild = userIds.map((id) => ({
               id,
@@ -96,6 +97,7 @@ export class ClientsService {
           isApproved,
           relatives: [...siblings, ...newRelatives],
           created,
+          address,
           updated: created,
           isVisible: true,
         };

@@ -8,8 +8,10 @@ const mailTransport = nodemailer.createTransport({
   service:"goDaddy",
   host: process.env.EMAIL_HOST,
   secure: true,
-  secureConnection: true, // TLS requires secureConnection to be false
-  requireTLS: true,
+  secureConnection: false, // TLS requires secureConnection to be false
+  tls: {
+    ciphers:'SSLv3'
+  },
   port: process.env.EMAIL_PORT,
   auth: {
     user: process.env.EMAIL_FROM,

@@ -6,7 +6,7 @@ require("dotenv").config();
 
 const mailTransport = nodemailer.createTransport({
   host: process.env.EMAIL_HOST,
-  secure: true,
+  secure: false,
   secureConnection: false, // TLS requires secureConnection to be false
   tls: {
     ciphers:'SSLv3'

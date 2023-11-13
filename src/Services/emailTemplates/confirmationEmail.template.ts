@@ -423,7 +423,7 @@ ul.social li{
 </table>
 </tr>
 <tr><td><h4>Thank you for your registration!</h4></td></tr>
-<tr><td><h4>to confirm the registration please pay <b>${data.price}</b> to the email payment@championclub.ca</h4></td></tr>
+<tr><td><h4>Please note: to confirm the registration please pay <b>${data.price}</b> to the email payment@championclub.ca</h4></td></tr>
 </tbody></table>
 </td>
 </tr>

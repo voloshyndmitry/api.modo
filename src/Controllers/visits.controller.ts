@@ -36,6 +36,16 @@ export class VisitsController {
   }
 
   @UseGuards(AuthGuard)
+  @Post('/drop-in')
+  async createDropIn(
+    @Body() CreateVisitsDto: CreateVisitDto,
+    @Request() req: CustomRequest
+  ) {
+    this.logsService.log(req);
+    return this.VisitsService.createDropIn(CreateVisitsDto, req.user);
+  }
+
+  @UseGuards(AuthGuard)
   @Put()
   async update(
     @Body() CreateVisitsDto: CreateVisitDto,

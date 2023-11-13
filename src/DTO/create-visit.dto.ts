@@ -8,4 +8,5 @@ export class CreateVisitDto {
   readonly clientsIds: string[];
   readonly created: MetaData;
   readonly updated: MetaData;
+  readonly type?: string;
 }

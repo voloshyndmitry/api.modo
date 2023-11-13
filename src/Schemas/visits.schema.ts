@@ -22,6 +22,9 @@ export class VisitDataClass {
   @Prop({ required: true, type: Array})
   clientsIds: string[];
 
+  @Prop({ required: false, type: String})
+  type: string;
+
   @Prop({ type: MetaDataSchema })
   created: MetaData;
   

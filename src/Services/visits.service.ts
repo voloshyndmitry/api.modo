@@ -34,6 +34,25 @@ export class VisitsService {
     return createdVisit.save();
   }
 
+  async createDropIn(createVisitDto: CreateVisitDto, user): Promise<VisitDataClass> {
+    const id = `event${generateId()}`;
+    const created = {
+      date: new Date().getTime(),
+      userId: user.sub,
+    };
+    const currentUser = await this.usersService.findOne(user.sub);
+    const createdVisit = new this.VisitsModel({
+      ...createVisitDto,
+      groupId: currentUser.groupId,
+      id,
+      created,
+      updated: created,
+      type: "dropIn"
+    });
+
+    return createdVisit.save();
+  }
+
   async update(createVisitDto: CreateVisitDto, user): Promise<VisitDataClass> {
     const { id, ...updateData } = createVisitDto;
     const updated = {

@@ -15,7 +15,10 @@ export class MembershipsService {
     private usersService: UsersService
   ) {}
 
-  async create(createMembershipDto: CreateMembershipDto, user): Promise<MembershipDataClass> {
+  async create(
+    createMembershipDto: CreateMembershipDto,
+    user
+  ): Promise<MembershipDataClass> {
     const id = `event${generateId()}`;
     const created = {
       date: new Date().getTime(),
@@ -33,20 +36,30 @@ export class MembershipsService {
     return createdMembership.save();
   }
 
-  async update(createMembershipDto: CreateMembershipDto, user): Promise<MembershipDataClass> {
+  async update(
+    createMembershipDto: CreateMembershipDto,
+    user
+  ): Promise<MembershipDataClass> {
     const { id, ...updateData } = createMembershipDto;
     const updated = {
       date: new Date().getTime(),
       userId: user.sub,
     };
-    const resp = await this.MembershipsModel.findOneAndUpdate({ id }, {...updateData, updated}, {
-      new: true,
-    });
+    const resp = await this.MembershipsModel.findOneAndUpdate(
+      { id },
+      { ...updateData, updated },
+      {
+        new: true,
+      }
+    );
 
     return resp;
   }
 
-  async updateValue(createMembershipDto: CreateMembershipDto, user): Promise<MembershipDataClass> {
+  async updateValue(
+    createMembershipDto: CreateMembershipDto,
+    user
+  ): Promise<MembershipDataClass> {
     const { id, ...updateData } = createMembershipDto;
     const updated = {
       date: new Date().getTime(),
@@ -79,7 +92,9 @@ export class MembershipsService {
   }
 
   async delete(id: string) {
-    const deletedCat = await this.MembershipsModel.findOneAndRemove({ id }).exec();
+    const deletedCat = await this.MembershipsModel.findOneAndRemove({
+      id,
+    }).exec();
     return deletedCat;
   }
 }

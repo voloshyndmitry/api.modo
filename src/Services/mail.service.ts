@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { CreateClientDto } from "src/DTO/create-client.dto";
-import getConfirmationEmail from "./emailTemplates/confirmationEmail.template"
+import getConfirmationEmail from "./emailTemplates/confirmationEmail.template";
 const nodemailer = require("nodemailer");
 require("dotenv").config();
 
@@ -9,7 +9,7 @@ const mailTransport = nodemailer.createTransport({
   secure: false,
   secureConnection: false, // TLS requires secureConnection to be false
   tls: {
-    ciphers:'SSLv3'
+    ciphers: "SSLv3",
   },
   port: process.env.EMAIL_PORT,
   auth: {
@@ -80,7 +80,7 @@ export class MailService {
     to: string;
     subject: string;
     text: string;
-    html?: string
+    html?: string;
   }): Promise<void> {
     try {
       const from = process.env.EMAIL_FROM;
@@ -95,7 +95,7 @@ export class MailService {
 
   async sendUserConfirmation(data: CreateClientDto) {
     const mailOptions = this.getEmailOptionsFromUser(data);
-    const html = getConfirmationEmail(data)
+    const html = getConfirmationEmail(data);
     this.send({ ...mailOptions, html });
   }
 }

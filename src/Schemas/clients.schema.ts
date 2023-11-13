@@ -103,7 +103,7 @@ export class ClientsDataClass {
 
   @Prop({ type: String })
   medicalBehavioralInfo: string;
-  
+
   @Prop({ type: Number })
   price: number;
 

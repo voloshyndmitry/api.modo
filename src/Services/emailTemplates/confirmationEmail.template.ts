@@ -411,19 +411,33 @@ ul.social li{
 <table>
     <tr><td>Email:</td><td>${data.email}</td></tr>
     <tr><td>Date of Birth:</td><td>${dob}</td></tr>
-    ${data.gender ? `<tr><td>Gender:</td><td>${data.gender}</td></tr>` : ''}
+    ${data.gender ? `<tr><td>Gender:</td><td>${data.gender}</td></tr>` : ""}
     <tr><td>Phone:</td><td>${data.phone}</td></tr>
-    <tr><td>Address:</td><td>${data.address.streetAddress1}${data.address.streetAddress2 ? `, ${data.address.streetAddress2}` : ''}, ${data.address.postalCode}, ${data.address.province}, ${data.address.city}, ${data.address.country}</td></tr>
+    <tr><td>Address:</td><td>${data.address.streetAddress1}${
+    data.address.streetAddress2 ? `, ${data.address.streetAddress2}` : ""
+  }, ${data.address.postalCode}, ${data.address.province}, ${
+    data.address.city
+  }, ${data.address.country}</td></tr>
     <tr><td>Payment Option:</td><td>${data.paymentOption}</td></tr>
     <tr><td></td><td>to payment@championclub.ca</td></tr>
-    ${data.medicalBehavioralInfo ? `<tr><td>Medical Behavioral Info:</td><td>${data.medicalBehavioralInfo}</td></tr>` : ''}
+    ${
+      data.medicalBehavioralInfo
+        ? `<tr><td>Medical Behavioral Info:</td><td>${data.medicalBehavioralInfo}</td></tr>`
+        : ""
+    }
     <tr><td>Price:</td><td>${data.price} (Including 5% GST)</td></tr>
 
-    ${data.memberships ? `<tr><td>Memberships</td><td>${data.memberships.join(", ")}</td>` : ''}
+    ${
+      data.memberships
+        ? `<tr><td>Memberships</td><td>${data.memberships.join(", ")}</td>`
+        : ""
+    }
 </table>
 </tr>
 <tr><td><h4>Thank you for your registration!</h4></td></tr>
-<tr><td><h4>Please note: to confirm the registration please pay <b>${data.price}</b> to the email payment@championclub.ca</h4></td></tr>
+<tr><td><h4>Please note: to confirm the registration please pay <b>${
+    data.price
+  }</b> to the email payment@championclub.ca</h4></td></tr>
 </tbody></table>
 </td>
 </tr>

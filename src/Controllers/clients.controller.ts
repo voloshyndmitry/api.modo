@@ -21,7 +21,7 @@ import { CustomRequest } from "../Common/common.interfaces";
 export class ClientsController {
   constructor(
     private readonly ClientsService: ClientsService,
-    private readonly logsService: LogsService,
+    private readonly logsService: LogsService
   ) {}
 
   @Post("public")
@@ -34,7 +34,10 @@ export class ClientsController {
   }
   @UseGuards(AuthGuard)
   @Post()
-  async create(@Body() CreateClientsDto: CreateClientDto, @Request() req: CustomRequest) {
+  async create(
+    @Body() CreateClientsDto: CreateClientDto,
+    @Request() req: CustomRequest
+  ) {
     this.logsService.log(req);
 
     return this.ClientsService.create(CreateClientsDto, req.user);
@@ -42,7 +45,10 @@ export class ClientsController {
 
   @UseGuards(AuthGuard)
   @Put()
-  async update(@Body() CreateClientsDto: CreateClientDto, @Request() req: CustomRequest) {
+  async update(
+    @Body() CreateClientsDto: CreateClientDto,
+    @Request() req: CustomRequest
+  ) {
     this.logsService.log(req);
 
     return this.ClientsService.update(CreateClientsDto, req.user);

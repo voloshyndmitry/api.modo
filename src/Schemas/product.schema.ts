@@ -59,7 +59,7 @@ export class ProductDataClass {
   color: Color;
 
   @Prop({ type: Number })
-  salePrice: number
+  salePrice: number;
 
   @Prop({ type: OfferSchema })
   specialOffers: Offer;

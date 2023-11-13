@@ -5,7 +5,6 @@ import { UsersService } from "./users.service";
 import { AnalyticDataClass } from "../Schemas/analytics.schema";
 import { CreateAnalyticDto } from "../DTO/create-analytic.dto";
 
-
 const hyperid = require("hyperid");
 const generateId = hyperid({ urlSafe: true });
 @Injectable()
@@ -22,7 +21,7 @@ export class AnalyticsService {
       date: new Date().getTime(),
       userId: user.sub,
     };
-    try{
+    try {
       const currentUser = await this.usersService.findOne(user.sub);
       const createdAnalytic = new this.AnalyticsModel({
         ...createAnalyticDto,
@@ -30,30 +29,39 @@ export class AnalyticsService {
         id,
         created,
       });
-  
+
       await createdAnalytic.save();
 
-      return true
+      return true;
     } catch {
-      return false
+      return false;
     }
-    
   }
 
-  async update(createAnalyticDto: CreateAnalyticDto, user): Promise<AnalyticDataClass> {
+  async update(
+    createAnalyticDto: CreateAnalyticDto,
+    user
+  ): Promise<AnalyticDataClass> {
     const { id, ...updateData } = createAnalyticDto;
     const updated = {
       date: new Date().getTime(),
       userId: user.sub,
     };
-    const resp = await this.AnalyticsModel.findOneAndUpdate({ id }, {...updateData, updated}, {
-      new: true,
-    });
+    const resp = await this.AnalyticsModel.findOneAndUpdate(
+      { id },
+      { ...updateData, updated },
+      {
+        new: true,
+      }
+    );
 
     return resp;
   }
 
-  async updateValue(createAnalyticDto: CreateAnalyticDto, user): Promise<AnalyticDataClass> {
+  async updateValue(
+    createAnalyticDto: CreateAnalyticDto,
+    user
+  ): Promise<AnalyticDataClass> {
     const { id, ...updateData } = createAnalyticDto;
     const updated = {
       date: new Date().getTime(),
@@ -84,7 +92,9 @@ export class AnalyticsService {
   }
 
   async delete(id: string) {
-    const deletedCat = await this.AnalyticsModel.findOneAndRemove({ id }).exec();
+    const deletedCat = await this.AnalyticsModel.findOneAndRemove({
+      id,
+    }).exec();
     return deletedCat;
   }
 }

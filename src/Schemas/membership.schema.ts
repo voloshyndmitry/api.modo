@@ -41,7 +41,6 @@ export class MembershipDataClass {
 
   @Prop({ type: OfferSchema })
   specialOffers: Offer;
-  
 
   @Prop({ type: MetaDataSchema })
   created: MetaData;

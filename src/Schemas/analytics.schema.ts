@@ -15,35 +15,35 @@ export class AnalyticDataClass {
 
   @Prop({ type: String })
   ua: string;
-  
+
   @Prop({ type: Object })
   browser: {
     name: string;
     version: string;
     major: string;
   };
-  
+
   @Prop({ type: Object })
   engine: {
     name: string;
     version: string;
   };
-  
+
   @Prop({ type: Object })
   os: {
     name: string;
     version: string;
   };
-  
+
   @Prop({ type: Object })
   device: {
     vendor: string;
     model: string;
   };
-  
+
   @Prop({ type: Object })
   cpu: any;
-  
+
   @Prop({ type: Object })
   location: {
     range: number[];
@@ -56,7 +56,7 @@ export class AnalyticDataClass {
     metro: number;
     area: number;
   };
-  
+
   @Prop({ type: String })
   ip: string;
 

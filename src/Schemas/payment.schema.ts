@@ -36,7 +36,7 @@ export class PaymentDataClass {
 
   @Prop({ required: true, type: MetaDataSchema })
   created: MetaData;
-  
+
   @Prop({ required: true, type: MetaDataSchema })
   updated: MetaData;
 }

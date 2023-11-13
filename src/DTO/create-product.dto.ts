@@ -13,8 +13,8 @@ export class CreateProductDto {
     label: string;
     value: string;
   };
-  readonly salePrice?: number
-  readonly size?: number
+  readonly salePrice?: number;
+  readonly size?: number;
   readonly created: MetaData;
   readonly updated: MetaData;
 }

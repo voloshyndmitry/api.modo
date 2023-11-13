@@ -29,8 +29,8 @@ export class EventDataClass {
 
   @Prop({ required: true, type: String })
   startTime: string;
-  
-  @Prop({ required: true, type: String})
+
+  @Prop({ required: true, type: String })
   endTime: string;
 
   @Prop({ required: true, type: String })
@@ -44,7 +44,7 @@ export class EventDataClass {
 
   @Prop({ required: true, type: MetaDataSchema })
   created: MetaData;
-  
+
   @Prop({ required: true, type: MetaDataSchema })
   updated: MetaData;
 }

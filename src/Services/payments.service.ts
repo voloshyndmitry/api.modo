@@ -15,7 +15,10 @@ export class PaymentsService {
     private usersService: UsersService
   ) {}
 
-  async create(createPaymentDto: CreatePaymentDto, user): Promise<PaymentDataClass> {
+  async create(
+    createPaymentDto: CreatePaymentDto,
+    user
+  ): Promise<PaymentDataClass> {
     const id = `event${generateId()}`;
     const created = {
       date: new Date().getTime(),
@@ -33,20 +36,30 @@ export class PaymentsService {
     return createdPayment.save();
   }
 
-  async update(createPaymentDto: CreatePaymentDto, user): Promise<PaymentDataClass> {
+  async update(
+    createPaymentDto: CreatePaymentDto,
+    user
+  ): Promise<PaymentDataClass> {
     const { id, ...updateData } = createPaymentDto;
     const updated = {
       date: new Date().getTime(),
       userId: user.sub,
     };
-    const resp = await this.PaymentsModel.findOneAndUpdate({ id }, {...updateData, updated}, {
-      new: true,
-    });
+    const resp = await this.PaymentsModel.findOneAndUpdate(
+      { id },
+      { ...updateData, updated },
+      {
+        new: true,
+      }
+    );
 
     return resp;
   }
 
-  async updateValue(createPaymentDto: CreatePaymentDto, user): Promise<PaymentDataClass> {
+  async updateValue(
+    createPaymentDto: CreatePaymentDto,
+    user
+  ): Promise<PaymentDataClass> {
     const { id, ...updateData } = createPaymentDto;
     const updated = {
       date: new Date().getTime(),
@@ -79,7 +92,7 @@ export class PaymentsService {
     const currentUser = await this.usersService.findOne(user?.sub);
     const Payments = await this.PaymentsModel.find({
       groupId: currentUser.groupId,
-      clientId
+      clientId,
     }).exec();
 
     return Payments.map((Payment) => {

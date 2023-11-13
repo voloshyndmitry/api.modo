@@ -1,12 +1,10 @@
-
 export interface MetaData {
-    date: string;
-    userId: string;
-  }
-
+  date: string;
+  userId: string;
+}
 
 export interface CustomRequest extends Request {
-  user: { sub: string }
+  user: { sub: string };
 }
 
 export enum PAYMENT_STATUS {

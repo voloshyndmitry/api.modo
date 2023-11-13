@@ -9,7 +9,7 @@ export type VisitsDocument = HydratedDocument<VisitDataClass>;
 export class VisitDataClass {
   @Prop({ required: true, type: String })
   id: string;
-  
+
   @Prop({ required: true, type: String })
   groupId: string;
 
@@ -18,16 +18,16 @@ export class VisitDataClass {
 
   @Prop({ required: true, type: String })
   date: string;
-  
-  @Prop({ required: true, type: Array})
+
+  @Prop({ required: true, type: Array })
   clientsIds: string[];
 
-  @Prop({ required: false, type: String})
+  @Prop({ required: false, type: String })
   type: string;
 
   @Prop({ type: MetaDataSchema })
   created: MetaData;
-  
+
   @Prop({ type: MetaDataSchema })
   updated: MetaData;
 }

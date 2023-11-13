@@ -50,8 +50,8 @@ export class ClientsService {
             { length: client.relatives.length },
             () => generateId()
           );
-          address = client.address
-          paymentOption = client.paymentOption
+          address = client.address;
+          paymentOption = client.paymentOption;
           newRelatives = client.relatives.map((relativeClient, relIndex) => {
             const reversRelativesChild = userIds.map((id) => ({
               id,
@@ -64,7 +64,7 @@ export class ClientsService {
                 relative: "spouse",
               }))
               .filter(({ id }) => id !== relativeIds[relIndex]);
-            
+
             const formattedRelative = {
               ...relativeClient,
               id: relativeIds[relIndex],
@@ -75,7 +75,9 @@ export class ClientsService {
               updated: created,
               isVisible: true,
             };
-            const createdRelativeClient = new this.clientsModel(formattedRelative);
+            const createdRelativeClient = new this.clientsModel(
+              formattedRelative
+            );
 
             createdRelativeClient.save();
 

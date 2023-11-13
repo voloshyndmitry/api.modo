@@ -20,10 +20,8 @@ import { MailService } from "src/Services/mail.service";
     MongooseModule.forFeature([
       { name: PaymentDataClass.name, schema: PaymentSchema },
     ]),
-    MongooseModule.forFeature([
-      { name: LogDataClass.name, schema: LogSchema },
-    ]),
-    HttpModule
+    MongooseModule.forFeature([{ name: LogDataClass.name, schema: LogSchema }]),
+    HttpModule,
   ],
   controllers: [ClientsController],
   providers: [ClientsService, LogsService, PaymentsService, MailService],

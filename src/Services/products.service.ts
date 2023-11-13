@@ -5,7 +5,6 @@ import { UsersService } from "./users.service";
 import { CreateProductDto } from "../DTO/create-product.dto";
 import { ProductDataClass } from "../Schemas/product.schema";
 
-
 const hyperid = require("hyperid");
 const generateId = hyperid({ urlSafe: true });
 @Injectable()
@@ -16,7 +15,10 @@ export class ProductsService {
     private usersService: UsersService
   ) {}
 
-  async create(createProductDto: CreateProductDto, user): Promise<ProductDataClass> {
+  async create(
+    createProductDto: CreateProductDto,
+    user
+  ): Promise<ProductDataClass> {
     const id = `event${generateId()}`;
     const created = {
       date: new Date().getTime(),
@@ -34,20 +36,30 @@ export class ProductsService {
     return createdProduct.save();
   }
 
-  async update(createProductDto: CreateProductDto, user): Promise<ProductDataClass> {
+  async update(
+    createProductDto: CreateProductDto,
+    user
+  ): Promise<ProductDataClass> {
     const { id, ...updateData } = createProductDto;
     const updated = {
       date: new Date().getTime(),
       userId: user.sub,
     };
-    const resp = await this.ProductsModel.findOneAndUpdate({ id }, {...updateData, updated}, {
-      new: true,
-    });
+    const resp = await this.ProductsModel.findOneAndUpdate(
+      { id },
+      { ...updateData, updated },
+      {
+        new: true,
+      }
+    );
 
     return resp;
   }
 
-  async updateValue(createProductDto: CreateProductDto, user): Promise<ProductDataClass> {
+  async updateValue(
+    createProductDto: CreateProductDto,
+    user
+  ): Promise<ProductDataClass> {
     const { id, ...updateData } = createProductDto;
     const updated = {
       date: new Date().getTime(),

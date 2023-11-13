@@ -38,14 +38,21 @@ export class EventsService {
       date: new Date().getTime(),
       userId: user.sub,
     };
-    const resp = await this.EventsModel.findOneAndUpdate({ id }, {...updateData, updated}, {
-      new: true,
-    });
+    const resp = await this.EventsModel.findOneAndUpdate(
+      { id },
+      { ...updateData, updated },
+      {
+        new: true,
+      }
+    );
 
     return resp;
   }
 
-  async updateValue(createEventDto: CreateEventDto, user): Promise<EventDataClass> {
+  async updateValue(
+    createEventDto: CreateEventDto,
+    user
+  ): Promise<EventDataClass> {
     const { id, ...updateData } = createEventDto;
     const updated = {
       date: new Date().getTime(),

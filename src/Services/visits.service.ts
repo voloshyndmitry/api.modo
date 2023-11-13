@@ -5,7 +5,6 @@ import { UsersService } from "./users.service";
 import { CreateVisitDto } from "../DTO/create-visit.dto";
 import { VisitDataClass } from "../Schemas/visits.schema";
 
-
 const hyperid = require("hyperid");
 const generateId = hyperid({ urlSafe: true });
 @Injectable()
@@ -34,7 +33,10 @@ export class VisitsService {
     return createdVisit.save();
   }
 
-  async createDropIn(createVisitDto: CreateVisitDto, user): Promise<VisitDataClass> {
+  async createDropIn(
+    createVisitDto: CreateVisitDto,
+    user
+  ): Promise<VisitDataClass> {
     const id = `event${generateId()}`;
     const created = {
       date: new Date().getTime(),
@@ -47,7 +49,7 @@ export class VisitsService {
       id,
       created,
       updated: created,
-      type: "dropIn"
+      type: "dropIn",
     });
 
     return createdVisit.save();
@@ -59,14 +61,21 @@ export class VisitsService {
       date: new Date().getTime(),
       userId: user.sub,
     };
-    const resp = await this.VisitsModel.findOneAndUpdate({ id }, {...updateData, updated}, {
-      new: true,
-    });
+    const resp = await this.VisitsModel.findOneAndUpdate(
+      { id },
+      { ...updateData, updated },
+      {
+        new: true,
+      }
+    );
 
     return resp;
   }
 
-  async updateValue(createVisitDto: CreateVisitDto, user): Promise<VisitDataClass> {
+  async updateValue(
+    createVisitDto: CreateVisitDto,
+    user
+  ): Promise<VisitDataClass> {
     const { id, ...updateData } = createVisitDto;
     const updated = {
       date: new Date().getTime(),

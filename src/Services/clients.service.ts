@@ -192,7 +192,7 @@ export class ClientsService {
   }
 
   private getStatus({ id: clientId, status }: CreateClientDto): string {
-    if (status.toLowerCase() === PAYMENT_STATUS.NOT_ACTIVE) {
+    if (status?.toLowerCase?.() === PAYMENT_STATUS.NOT_ACTIVE) {
 
       return status;
     }

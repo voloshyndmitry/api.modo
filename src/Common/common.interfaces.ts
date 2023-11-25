@@ -8,8 +8,8 @@ export interface CustomRequest extends Request {
 }
 
 export enum PAYMENT_STATUS {
-  ACTIVE = "Active",
-  PENDING = "Pending",
-  NOT_ACTIVE = "Not Active",
-  FAMILY_MEMBER = "Family member",
+  ACTIVE = "active",
+  PENDING = "pending",
+  NOT_ACTIVE = "not active",
+  FAMILY_MEMBER = "family member",
 }

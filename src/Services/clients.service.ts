@@ -21,7 +21,7 @@ export class ClientsService {
     private usersService: UsersService,
     private paymentsService: PaymentsService,
     private readonly mailService: MailService
-  ) {}
+  ) { }
 
   async publicCreate(clients: CreateClientDto[]): Promise<string> {
     const groupId = "2";
@@ -191,7 +191,12 @@ export class ClientsService {
     return resp;
   }
 
-  private getStatus(clientId: string): string {
+  private getStatus({ id: clientId, status }: CreateClientDto): string {
+    if (status === PAYMENT_STATUS.NOT_ACTIVE) {
+      
+      return status;
+    }
+
     const lastPaymentByClientId = this.payments
       .sort((next, prev) => Number(prev.date) - Number(next.date))
       .find(
@@ -226,7 +231,7 @@ export class ClientsService {
         const { _id, ...clientData } = client.toObject();
         return {
           ...clientData,
-          status: this.getStatus(client.id),
+          status: this.getStatus(client),
         };
       });
   }

@@ -38,4 +38,6 @@ export class CreateClientDto {
   readonly created: MetaData;
   readonly updated: MetaData;
   readonly price: number;
+  readonly paymentNotes: string;
+  readonly notes: string;
 }

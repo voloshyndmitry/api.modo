@@ -102,10 +102,16 @@ export class ClientsDataClass {
   status: string;
 
   @Prop({ type: String })
-  medicalBehavioralInfo: string;
-
+  
   @Prop({ type: Number })
   price: number;
+  medicalBehavioralInfo: string;
+
+  @Prop({ type: String })
+  paymentNotes: string;
+
+  @Prop({ type: String })
+  notes: string;
 
   @Prop({ required: true, type: MetaDataSchema })
   created: MetaData;

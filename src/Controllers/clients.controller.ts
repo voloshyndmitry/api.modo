@@ -89,7 +89,7 @@ export class ClientsController {
 
   @UseGuards(AuthGuard)
   @Post("email")
-  async sentEmail(@Body() data: { email: string, html: string, subject: string }, req: CustomRequest) {
+  async sentEmail(@Body() data: { email: string, html: string, subject: string }, @Request() req: CustomRequest) {
     this.logsService.log(req);
 
     if(!data.email || !data.html) {

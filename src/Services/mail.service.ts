@@ -98,4 +98,10 @@ export class MailService {
     const html = getConfirmationEmail(data);
     this.send({ ...mailOptions, html });
   }
+
+  async sendUserMail(data: CreateClientDto) {
+    const mailOptions = this.getEmailOptionsFromUser(data);
+    const html = getConfirmationEmail(data);
+    this.send({ ...mailOptions, html });
+  }
 }

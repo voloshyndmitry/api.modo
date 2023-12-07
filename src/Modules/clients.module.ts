@@ -1,4 +1,5 @@
 import { Module } from "@nestjs/common";
+import { ScheduleModule } from '@nestjs/schedule';
 import { MongooseModule } from "@nestjs/mongoose";
 import { ClientsController } from "../Controllers/clients.controller";
 import { ClientSchema, ClientsDataClass } from "../Schemas/clients.schema";
@@ -22,6 +23,7 @@ import { MailService } from "src/Services/mail.service";
     ]),
     MongooseModule.forFeature([{ name: LogDataClass.name, schema: LogSchema }]),
     HttpModule,
+    ScheduleModule.forRoot()
   ],
   controllers: [ClientsController],
   providers: [ClientsService, LogsService, PaymentsService, MailService],

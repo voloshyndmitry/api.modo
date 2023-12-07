@@ -246,4 +246,34 @@ export class ClientsService {
       .exec();
     return deletedCat;
   }
+
+  async checkPayments() {
+    // admin groupId === 2 
+    const clients = await this.clientsModel
+      .find({ groupId: "2", isStudent: true })
+      .exec();
+
+    this.payments = await this.paymentsService.findAll({sub: "2"});
+
+    const filteredClients = clients?.filter?.(client => this.getStatus(client) === PAYMENT_STATUS.PENDING)
+
+    console.log(filteredClients.map(({name, surname}) => ({name, surname})))
+  }
+
+  async sendCustomEmail(to: string, subject: string, html: string) {
+    try{
+
+      await this.mailService.send({ to, html, subject, text: ''})
+      return ({
+        statusCode: 200
+      })
+    } catch(error) {
+      return ({
+        error: 500,
+        message: "Something went wrong"
+      })
+    }
+
+    
+  }
 }

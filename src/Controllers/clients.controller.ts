@@ -9,7 +9,9 @@ import {
   Put,
   UseGuards,
   Request,
+  Injectable,
 } from "@nestjs/common";
+// import { Cron } from '@nestjs/schedule';
 import { CreateClientDto } from "../DTO/create-client.dto";
 import { ClientsDataClass } from "../Schemas/clients.schema";
 import { ClientsService } from "../Services/clients.service";
@@ -17,6 +19,7 @@ import { AuthGuard } from "../Services/auth.guard";
 import { LogsService } from "../Services/logs.service";
 import { CustomRequest } from "../Common/common.interfaces";
 
+@Injectable()
 @Controller("clients")
 export class ClientsController {
   constructor(
@@ -82,4 +85,28 @@ export class ClientsController {
 
     return this.ClientsService.delete(id);
   }
+
+
+  @UseGuards(AuthGuard)
+  @Post("email")
+  async sentEmail(@Body() data: { email: string, html: string, subject: string }, req: CustomRequest) {
+    this.logsService.log(req);
+
+    if(!data.email || !data.html) {
+      return ({
+        error: 505,
+        message: 'email or html fields are empty'
+      })
+    }
+    return this.ClientsService.sendCustomEmail(data.email, data.subject || '', data.html);
+  }
+
+
+  // @Cron('* * * * * *')
+  // checkPayments() {
+  //   console.log("********")
+
+  //   this.ClientsService.checkPayments()
+  // }
+
 }

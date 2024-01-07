@@ -11,7 +11,7 @@ import {
   Request,
   Injectable,
 } from "@nestjs/common";
-// import { Cron } from '@nestjs/schedule';
+// import { Cron } from "@nestjs/schedule";
 import { CreateClientDto } from "../DTO/create-client.dto";
 import { ClientsDataClass } from "../Schemas/clients.schema";
 import { ClientsService } from "../Services/clients.service";
@@ -86,27 +86,31 @@ export class ClientsController {
     return this.ClientsService.delete(id);
   }
 
-
   @UseGuards(AuthGuard)
   @Post("email")
-  async sentEmail(@Body() data: { email: string, html: string, subject: string }, @Request() req: CustomRequest) {
+  async sentEmail(
+    @Body() data: { email: string; html: string; subject: string },
+    @Request() req: CustomRequest
+  ) {
     this.logsService.log(req);
 
-    if(!data.email || !data.html) {
-      return ({
+    if (!data.email || !data.html) {
+      return {
         error: 505,
-        message: 'email or html fields are empty'
-      })
+        message: "email or html fields are empty",
+      };
     }
-    return this.ClientsService.sendCustomEmail(data.email, data.subject || '', data.html);
+    return this.ClientsService.sendCustomEmail(
+      data.email,
+      data.subject || "",
+      data.html
+    );
   }
 
-
-  // @Cron('* * * * * *')
+  // @Cron("5,10,20,30,40,50 * * * * *")
   // checkPayments() {
-  //   console.log("********")
+  //   console.log("********");
 
-  //   this.ClientsService.checkPayments()
+  //   this.ClientsService.checkPayments();
   // }
-
 }

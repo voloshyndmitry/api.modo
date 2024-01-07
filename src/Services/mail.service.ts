@@ -84,7 +84,11 @@ export class MailService {
   }): Promise<void> {
     try {
       const from = process.env.EMAIL_FROM;
-      await mailTransport.sendMail({ from, ...data });
+      console.log({ from, ...data, html: "" });
+      await mailTransport
+        .sendMail({ from, ...data })
+        .then((e) => console.log({ e }))
+        .catch((error) => console.log(error));
       console.log("Email sent successfully");
     } catch (err) {
       console.log("Failed to send email");

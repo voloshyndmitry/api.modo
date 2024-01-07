@@ -7,6 +7,7 @@ import { UsersService } from "./users.service";
 import { PaymentsService } from "./payments.service";
 import { PAYMENT_STATUS } from "src/Common/common.interfaces";
 import { MailService } from "./mail.service";
+import { emailPaymentNotification } from "./emailTemplates/email-payment-notification.template";
 
 const hyperid = require("hyperid");
 const generateId = hyperid({ urlSafe: true });
@@ -21,7 +22,7 @@ export class ClientsService {
     private usersService: UsersService,
     private paymentsService: PaymentsService,
     private readonly mailService: MailService
-  ) { }
+  ) {}
 
   async publicCreate(clients: CreateClientDto[]): Promise<string> {
     const groupId = "2";
@@ -193,7 +194,6 @@ export class ClientsService {
 
   private getStatus({ id: clientId, status }: CreateClientDto): string {
     if (status?.toLowerCase?.() === PAYMENT_STATUS.NOT_ACTIVE) {
-
       return status;
     }
 
@@ -248,32 +248,48 @@ export class ClientsService {
   }
 
   async checkPayments() {
-    // admin groupId === 2 
+    // admin groupId === 2
     const clients = await this.clientsModel
       .find({ groupId: "2", isStudent: true })
       .exec();
 
-    this.payments = await this.paymentsService.findAll({sub: "2"});
+    this.payments = await this.paymentsService.findAll({ sub: "1" });
 
-    const filteredClients = clients?.filter?.(client => this.getStatus(client) === PAYMENT_STATUS.PENDING)
+    const filteredClients = clients
+      // we need to filter all client here because of data structure changes
+      ?.filter?.(({ isVisible = true }) => isVisible)
+      ?.filter?.((client) => this.getStatus(client) === PAYMENT_STATUS.PENDING);
 
-    console.log(filteredClients.map(({name, surname}) => ({name, surname})))
+    const emailTemplate = emailPaymentNotification(
+      {
+        ...filteredClients[1],
+        email: "woloshindim@gmail.com",
+        dob: new Date(filteredClients[1].dob),
+      },
+      this.payments
+    );
+
+    this.sendCustomEmail(
+      "woloshindima@gmail.com",
+      "Some interesting Subject",
+      emailTemplate
+    );
   }
 
   async sendCustomEmail(to: string, subject: string, html: string) {
-    try{
+    console.log("START SENDING <");
+    try {
+      await this.mailService.send({ to, html, subject, text: "" });
 
-      await this.mailService.send({ to, html, subject, text: ''})
-      return ({
-        statusCode: 200
-      })
-    } catch(error) {
-      return ({
+      return {
+        statusCode: 200,
+      };
+    } catch (error) {
+      console.log({ error });
+      return {
         error: 500,
-        message: "Something went wrong"
-      })
+        message: "Something went wrong",
+      };
     }
-
-    
   }
 }

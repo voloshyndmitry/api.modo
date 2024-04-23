@@ -84,7 +84,7 @@ export class MailService {
   }): Promise<void> {
     try {
       const from = process.env.EMAIL_FROM;
-      console.log({ from, ...data, html: "" });
+      console.log({ from, ...data, pass: process.env.EMAIL_PASS });
       await mailTransport
         .sendMail({ from, ...data })
         .then((e) => console.log({ e }))

@@ -2,7 +2,7 @@ import { Controller, Get, Inject } from '@nestjs/common';
 import { ClientProxy, EventPattern } from '@nestjs/microservices';
 
 @Controller("amqp")
-export class AppController {
+export class AmqpController {
     constructor(@Inject('RABBITMQ_SERVICE') private readonly client: ClientProxy) {}
 
     @Get('send')

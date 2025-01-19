@@ -17,8 +17,11 @@ import { MembershipDataClass } from "../Schemas/membership.schema";
 import { MembershipsService } from "../Services/membership.service";
 import { CustomRequest } from "../Common/common.interfaces";
 import { LogsService } from "../Services/logs.service";
+import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 
 @Controller("memberships")
+@ApiTags('Memberships')
+@ApiBearerAuth() // Enable Bearer Auth for Swagger UI
 export class MembershipsController {
   constructor(
     private readonly MembershipsService: MembershipsService,

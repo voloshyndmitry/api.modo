@@ -11,7 +11,11 @@ import { CreateUserDto } from "../DTO/create-user.dto";
 import { UsersDataClass } from "../Schemas/users.schema";
 import { UsersService } from "../Services/users.service";
 import { AuthGuard } from "../Services/auth.guard";
+import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 
+
+@ApiTags('User')
+@ApiBearerAuth() // Enable Bearer Auth for Swagger UI
 @Controller("user")
 export class UsersController {
   constructor(private readonly UsersService: UsersService) {}

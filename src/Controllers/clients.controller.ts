@@ -18,7 +18,10 @@ import { ClientsService } from "../Services/clients.service";
 import { AuthGuard } from "../Services/auth.guard";
 import { LogsService } from "../Services/logs.service";
 import { CustomRequest } from "../Common/common.interfaces";
+import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 
+@ApiTags('Clients')
+@ApiBearerAuth() // Enable Bearer Auth for Swagger UI
 @Injectable()
 @Controller("clients")
 export class ClientsController {

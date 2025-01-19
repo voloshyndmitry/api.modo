@@ -17,7 +17,11 @@ import { VisitDataClass } from "../Schemas/visits.schema";
 import { VisitsService } from "../Services/visits.service";
 import { CustomRequest } from "../Common/common.interfaces";
 import { LogsService } from "../Services/logs.service";
+import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 
+
+@ApiTags('Visits')
+@ApiBearerAuth() // Enable Bearer Auth for Swagger UI
 @Controller("visits")
 export class VisitsController {
   constructor(

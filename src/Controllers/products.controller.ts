@@ -17,7 +17,10 @@ import { ProductDataClass } from "../Schemas/product.schema";
 import { ProductsService } from "../Services/products.service";
 import { CustomRequest } from "../Common/common.interfaces";
 import { LogsService } from "../Services/logs.service";
+import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 
+@ApiTags('Products')
+@ApiBearerAuth() // Enable Bearer Auth for Swagger UI
 @Controller("products")
 export class ProductsController {
   constructor(

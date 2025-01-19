@@ -17,7 +17,10 @@ import { PaymentDataClass } from "../Schemas/payment.schema";
 import { PaymentsService } from "../Services/payments.service";
 import { CustomRequest } from "../Common/common.interfaces";
 import { LogsService } from "../Services/logs.service";
+import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 
+@ApiTags('Payments')
+@ApiBearerAuth() // Enable Bearer Auth for Swagger UI
 @Controller("payments")
 export class PaymentsController {
   constructor(

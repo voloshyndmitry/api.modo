@@ -9,7 +9,9 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
       .setTitle('Modo Api')
-      .setVersion('1.0')
+      .setDescription('API documentation')
+      .setVersion('1.1')
+      .addBearerAuth() // Add JWT Bearer Authorization
       .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);

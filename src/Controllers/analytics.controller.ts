@@ -19,6 +19,7 @@ import { AnalyticDataClass } from "../Schemas/analytics.schema";
 import { JwtService } from "@nestjs/jwt";
 import { request } from "express";
 import { jwtConstants } from "../Constants/auth.constants";
+import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 const geoip = require("geoip-lite");
 const requestIp = require("request-ip");
 
@@ -30,6 +31,9 @@ interface CustomRequest extends Request {
   headers: CustomHeaders;
 }
 
+
+@ApiTags('Analytics')
+@ApiBearerAuth() // Enable Bearer Auth for Swagger UI
 @Controller("analytics")
 export class AnalyticsController {
   constructor(

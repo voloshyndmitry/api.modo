@@ -1,5 +1,4 @@
 import { Module } from "@nestjs/common";
-import { AmqpModule } from './Modules/amqp.module';
 import { ClientsModule } from './Modules/clients.module';
 import { AppService } from "./Services/app.service";
 import { MongooseModule } from "@nestjs/mongoose";
@@ -26,7 +25,6 @@ require("dotenv").config();
     MembershipsModule,
     AnalyticsModule,
     ProductsModule,
-    AmqpModule
   ],
   providers: [AppService],
 })
